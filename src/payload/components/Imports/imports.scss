@@ -1,0 +1,9 @@
+@import '~payload/scss';
+
+.imports {
+	padding: var(--gutter-h);
+
+	input[type=file] {
+		display: none;
+	}
+}
