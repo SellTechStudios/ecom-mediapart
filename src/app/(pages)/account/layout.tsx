@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-import { Gutter } from '../../_components/Gutter'
 import { UserInfo } from './UserInfo'
 
+import { Container } from '../../_components/Container'
 import classes from './index.module.scss'
 
 const profileNavItems = [
@@ -33,7 +33,7 @@ const profileNavItems = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={classes.container}>
-      <Gutter>
+      <Container>
         <h3>My Profile</h3>
         <div className={classes.account}>
           <div className={classes.nav}>
@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           {children}
         </div>
-      </Gutter>
+      </Container>
     </div>
   )
 }

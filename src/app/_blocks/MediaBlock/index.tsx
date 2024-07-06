@@ -1,8 +1,8 @@
-import React from 'react'
 import { StaticImageData } from 'next/image'
+import React from 'react'
 
 import { Page } from '../../../payload/payload-types'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { Media } from '../../_components/Media'
 import RichText from '../../_components/RichText'
 
@@ -27,14 +27,14 @@ export const MediaBlock: React.FC<Props> = props => {
         </div>
       )}
       {position === 'default' && (
-        <Gutter>
+        <Container>
           <Media resource={media} src={staticImage} />
-        </Gutter>
+        </Container>
       )}
       {caption && (
-        <Gutter className={classes.caption}>
+        <Container className={classes.caption}>
           <RichText content={caption} />
-        </Gutter>
+        </Container>
       )}
     </div>
   )

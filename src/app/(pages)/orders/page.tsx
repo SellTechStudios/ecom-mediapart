@@ -1,11 +1,10 @@
-import React from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Order } from '../../../payload/payload-types'
 import { Button } from '../../_components/Button'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { HR } from '../../_components/HR'
 import { RenderParams } from '../../_components/RenderParams'
 import { formatDateTime } from '../../_utilities/formatDateTime'
@@ -47,7 +46,7 @@ export default async function Orders() {
   }
 
   return (
-    <Gutter className={classes.orders}>
+    <Container className={classes.orders}>
       <h1>Orders</h1>
       {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
         <p className={classes.noOrders}>You have no orders.</p>
@@ -85,7 +84,7 @@ export default async function Orders() {
       )}
       <HR />
       <Button href="/account" appearance="primary" label="Go to account" />
-    </Gutter>
+    </Container>
   )
 }
 

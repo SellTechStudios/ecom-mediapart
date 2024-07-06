@@ -1,9 +1,8 @@
-import React from 'react'
 import { Metadata } from 'next'
 
 import { Settings } from '../../../payload/payload-types'
 import { fetchSettings } from '../../_api/fetchGlobals'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
 import { LogoutPage } from './LogoutPage'
 
@@ -22,9 +21,9 @@ export default async function Logout() {
   }
 
   return (
-    <Gutter className={classes.logout}>
+    <Container className={classes.logout}>
       <LogoutPage settings={settings} />
-    </Gutter>
+    </Container>
   )
 }
 

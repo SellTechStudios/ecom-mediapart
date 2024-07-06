@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useEffect } from 'react'
 import Link from 'next/link'
+import React, { useEffect } from 'react'
 
 import { Page } from '../../../payload/payload-types'
 import { PRODUCT_PAYWALL } from '../../_graphql/products'
 import { useAuth } from '../../_providers/Auth'
 import { Blocks } from '../Blocks'
-import { Gutter } from '../Gutter'
+import { Container } from '../Container'
 import { LoadingShimmer } from '../LoadingShimmer'
 import { Message } from '../Message'
 import { VerticalPadding } from '../VerticalPadding'
@@ -78,7 +78,7 @@ export const PaywallBlocks: React.FC<{
 
   if (user === null) {
     return (
-      <Gutter>
+      <Container>
         <VerticalPadding bottom="large" top="none">
           <Message
             message={
@@ -92,27 +92,27 @@ export const PaywallBlocks: React.FC<{
             }
           />
         </VerticalPadding>
-      </Gutter>
+      </Container>
     )
   }
 
   if (isLoading) {
     return (
-      <Gutter>
+      <Container>
         <VerticalPadding bottom="large" top="none">
           <LoadingShimmer />
         </VerticalPadding>
-      </Gutter>
+      </Container>
     )
   }
 
   if (!blocks || blocks.length === 0) {
     return (
-      <Gutter>
+      <Container>
         <VerticalPadding bottom="large" top="none">
           <Message message="Purchase this product to unlock the content." />
         </VerticalPadding>
-      </Gutter>
+      </Container>
     )
   }
 

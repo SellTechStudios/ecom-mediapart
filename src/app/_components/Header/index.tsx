@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Header } from '../../../payload/payload-types'
 import { fetchHeader } from '../../_api/fetchGlobals'
 import HeaderComponent from './ClientComponents/header-component'

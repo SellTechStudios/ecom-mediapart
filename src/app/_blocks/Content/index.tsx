@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Page } from '../../../payload/payload-types'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { CMSLink } from '../../_components/Link'
 import RichText from '../../_components/RichText'
 
@@ -17,7 +17,7 @@ export const ContentBlock: React.FC<
   const { columns } = props
 
   return (
-    <Gutter className={classes.content}>
+    <Container className={classes.content}>
       <div className={classes.grid}>
         {columns &&
           columns.length > 0 &&
@@ -32,6 +32,6 @@ export const ContentBlock: React.FC<
             )
           })}
       </div>
-    </Gutter>
+    </Container>
   )
 }

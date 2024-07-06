@@ -9,6 +9,7 @@ import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
 import { productFetchBySlug } from '../../../_api/products'
 import { AddToCartButton } from '../../../_components/AddToCartButton'
+import { Container } from '../../../_components/Container'
 import { generateMeta } from '../../../_utilities/generateMeta'
 
 // Force this page to be dynamic so that Next.js does not cache it
@@ -29,7 +30,7 @@ export default async function Product({ params: { slug } }) {
   }
 
   return (
-    <div className="container">
+    <Container>
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-row items-start">
           {product.mediaImages.map((img, i) => (
@@ -46,7 +47,7 @@ export default async function Product({ params: { slug } }) {
           <div dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

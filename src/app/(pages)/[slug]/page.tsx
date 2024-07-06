@@ -7,6 +7,7 @@ import { Page as PageType } from '../../../payload/payload-types'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
+import { Container } from '../../_components/Container'
 import { generateMeta } from '../../_utilities/generateMeta'
 
 // Payload Cloud caches all files through Cloudflare, so we don't need Next.js to cache them as well
@@ -40,7 +41,11 @@ export default async function Page({ params: { slug = 'home' } }) {
 
   const { layout } = page
 
-  return <Blocks blocks={layout} />
+  return (
+    <Container>
+      <Blocks blocks={layout} />
+    </Container>
+  )
 }
 
 export async function generateStaticParams() {

@@ -5,7 +5,7 @@ import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar'
 import React, { useEffect } from 'react'
 
 import { useAuth } from '../../_providers/Auth'
-import { Gutter } from '../Gutter'
+import { Container } from '../Container'
 
 import classes from './index.module.scss'
 
@@ -33,7 +33,7 @@ export const AdminBar: React.FC<{
 
   return (
     <div className={[classes.adminBar, show && classes.show].filter(Boolean).join(' ')}>
-      <Gutter className={classes.blockContainer}>
+      <Container className={classes.blockContainer}>
         <PayloadAdminBar
           {...adminBarProps}
           collection={collection}
@@ -57,7 +57,7 @@ export const AdminBar: React.FC<{
             backgroundColor: 'transparent',
           }}
         />
-      </Gutter>
+      </Container>
     </div>
   )
 }

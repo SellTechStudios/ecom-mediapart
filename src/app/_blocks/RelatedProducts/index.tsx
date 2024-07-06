@@ -2,8 +2,7 @@ import React from 'react'
 
 import { Product } from '../../../payload/payload-types'
 import { Card } from '../../_components/Card'
-import { Gutter } from '../../_components/Gutter'
-import RichText from '../../_components/RichText'
+import { Container } from '../../_components/Container'
 
 import classes from './index.module.scss'
 
@@ -20,7 +19,7 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = props => {
 
   return (
     <div className={classes.relatedProducts}>
-      <Gutter>
+      <Container>
         <h3 className={classes.title}>Related Products</h3>
         <div className={classes.grid}>
           {docs?.map(doc => {
@@ -29,7 +28,7 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = props => {
             return <Card key={doc.id} relationTo={relationTo} doc={doc} showCategories />
           })}
         </div>
-      </Gutter>
+      </Container>
     </div>
   )
 }
