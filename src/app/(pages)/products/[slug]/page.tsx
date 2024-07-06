@@ -1,15 +1,15 @@
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
+import { CollectionMeta } from '../../../../payload/collections/_interfaces/collection-meta'
 import { Product as ProductType } from '../../../../payload/payload-types'
 import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
-import { generateMeta } from '../../../_utilities/generateMeta'
 import { productFetchBySlug } from '../../../_api/products'
-import { CollectionMeta } from '../../../../payload/collections/_interfaces/collection-meta'
 import { AddToCartButton } from '../../../_components/AddToCartButton'
+import { generateMeta } from '../../../_utilities/generateMeta'
 
 // Force this page to be dynamic so that Next.js does not cache it
 // See the note in '../../../[slug]/page.tsx' about this

@@ -1,14 +1,13 @@
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import React from 'react'
 
+import { CollectionMeta } from '../../../payload/collections/_interfaces/collection-meta'
 import { Page as PageType } from '../../../payload/payload-types'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
 import { generateMeta } from '../../_utilities/generateMeta'
-import { CollectionMeta } from '../../../payload/collections/_interfaces/collection-meta'
 
 // Payload Cloud caches all files through Cloudflare, so we don't need Next.js to cache them as well
 // This means that we can turn off Next.js data caching and instead rely solely on the Cloudflare CDN
@@ -20,8 +19,6 @@ export const dynamic = 'force-dynamic'
 
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
-
-  console.log(slug)
 
   let page: PageType | null = null
   try {

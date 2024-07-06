@@ -2,6 +2,17 @@
 const ContentSecurityPolicy = require('./csp')
 const redirects = require('./redirects')
 
+const domains = ['localhost', process.env.NEXT_PUBLIC_SERVER_URL, 'fd-distribution.pl']
+  .filter(Boolean)
+  .map(url => url.replace(/https?:\/\//, ''))
+
+const remotePatterns = domains.map(domain => ({
+  protocol: domain === 'localhost' ? 'http' : 'https',
+  hostname: domain,
+  port: '',
+  pathname: '/**',
+}))
+
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
@@ -9,9 +20,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['localhost', process.env.NEXT_PUBLIC_SERVER_URL, 'fd-distribution.pl']
-      .filter(Boolean)
-      .map(url => url.replace(/https?:\/\//, '')),
+    remotePatterns,
   },
   redirects,
   async headers() {
