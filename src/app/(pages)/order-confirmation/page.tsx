@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
 import { OrderConfirmationPage } from './OrderConfirmationPage'
 
@@ -9,11 +9,11 @@ import classes from './index.module.scss'
 
 export default async function OrderConfirmation() {
   return (
-    <Gutter className={classes.confirmationPage}>
+    <Container className={classes.confirmationPage}>
       <Suspense fallback={<div>Loading...</div>}>
         <OrderConfirmationPage />
       </Suspense>
-    </Gutter>
+    </Container>
   )
 }
 

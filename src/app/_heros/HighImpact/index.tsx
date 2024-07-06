@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 import { Media as MediaType } from '../../../payload/payload-types'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { CMSLink, CMSLinkType } from '../../_components/Link'
 import { Media } from '../../_components/Media'
 import RichText from '../../_components/RichText'
@@ -16,7 +16,7 @@ type HeroBlock = {
 
 export const HighImpactHero: React.FC<HeroBlock> = ({ richText, media, links }) => {
   return (
-    <Gutter className={classes.hero}>
+    <Container className={classes.hero}>
       <div className={classes.content}>
         <RichText content={richText} />
         {Array.isArray(links) && links.length > 0 && (
@@ -44,6 +44,6 @@ export const HighImpactHero: React.FC<HeroBlock> = ({ richText, media, links }) 
           </Fragment>
         )}
       </div>
-    </Gutter>
+    </Container>
   )
 }

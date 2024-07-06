@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-import { Page, Product } from '../../../payload/payload-types'
-import { productsBestsellers, productsLatest } from '../../_api/products'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Page, Product } from '../../../payload/payload-types'
+import { productsBestsellers, productsLatest } from '../../_api/products'
 
 type Props = Extract<Page['layout'][0], { blockType: 'productsSlider' }>
 
@@ -42,7 +42,7 @@ export const ProductsSliderBlock: React.FC<Props> = props => {
       <div className="flex flex-row gap-2">
         {products.map(p => (
           <Link href={`/products/${p.slug}`} className="flex flex-col w-60">
-            <div className="flex flex-row gap-2 items-end flex-wrap">
+            <div className="flex flex-row flex-wrap items-end gap-2">
               {p.mediaImages.map(i => (
                 <Image
                   src={i.url}

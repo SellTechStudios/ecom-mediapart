@@ -1,11 +1,10 @@
-import React from 'react'
 import { draftMode } from 'next/headers'
 
-import { ProductCategory, Page } from '../../../../payload/payload-types'
+import { Page, ProductCategory } from '../../../../payload/payload-types'
 import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
 import { Blocks } from '../../../_components/Blocks'
-import { Gutter } from '../../../_components/Gutter'
+import { Container } from '../../../_components/Container'
 import { HR } from '../../../_components/HR'
 import Filters from '../Filters'
 
@@ -29,10 +28,10 @@ const PromotedProducts = async () => {
 
   return (
     <div>
-      <Gutter>
+      <Container>
         <Filters categories={categories} />
         <Blocks blocks={page?.layout} disableTopPadding={true} />
-      </Gutter>
+      </Container>
       <HR />
     </div>
   )

@@ -1,14 +1,14 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { CollectionMeta } from '../../../payload/collections/_interfaces/collection-meta'
 import { Page, Settings } from '../../../payload/payload-types'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchSettings } from '../../_api/fetchGlobals'
 import { Blocks } from '../../_components/Blocks'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { generateMeta } from '../../_utilities/generateMeta'
 import { CartPage } from './CartPage'
-import { CollectionMeta } from '../../../payload/collections/_interfaces/collection-meta'
 
 // Force this page to be dynamic so that Next.js does not cache it
 // See the note in '../[slug]/page.tsx' about this
@@ -46,10 +46,10 @@ export default async function Cart() {
 
   return (
     <div>
-      <Gutter>
+      <Container>
         <h3 data-chomik="tcdsfjsfkjhk">Cart</h3>
         <CartPage settings={settings} page={page} />
-      </Gutter>
+      </Container>
       <Blocks blocks={page?.layout} disableBottomPadding />
     </div>
   )

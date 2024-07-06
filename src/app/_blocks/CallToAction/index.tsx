@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Page } from '../../../payload/payload-types'
-import { Gutter } from '../../_components/Gutter'
+import { Container } from '../../_components/Container'
 import { CMSLink } from '../../_components/Link'
 import RichText from '../../_components/RichText'
 import { VerticalPadding } from '../../_components/VerticalPadding'
@@ -16,7 +16,7 @@ export const CallToActionBlock: React.FC<
   }
 > = ({ links, richText, invertBackground }) => {
   return (
-    <Gutter>
+    <Container>
       <VerticalPadding
         className={[classes.callToAction, invertBackground && classes.invert]
           .filter(Boolean)
@@ -33,6 +33,6 @@ export const CallToActionBlock: React.FC<
           </div>
         </div>
       </VerticalPadding>
-    </Gutter>
+    </Container>
   )
 }

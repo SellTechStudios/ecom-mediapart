@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 
 import { Order as OrderType } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
-import { Gutter } from '../../../_components/Gutter'
+import { Container } from '../../../_components/Container'
 import { HR } from '../../../_components/HR'
 import { Media } from '../../../_components/Media'
 import { formatDateTime } from '../../../_utilities/formatDateTime'
@@ -45,7 +45,7 @@ export default async function Order({ params: { id } }) {
   }
 
   return (
-    <Gutter className={classes.orders}>
+    <Container className={classes.orders}>
       <h1>
         {`Order`}
         <span className={classes.id}>{`${order.id}`}</span>
@@ -124,7 +124,7 @@ export default async function Order({ params: { id } }) {
         <Button href="/orders" appearance="primary" label="See all orders" />
         <Button href="/account" appearance="secondary" label="Go to account" />
       </div>
-    </Gutter>
+    </Container>
   )
 }
 
