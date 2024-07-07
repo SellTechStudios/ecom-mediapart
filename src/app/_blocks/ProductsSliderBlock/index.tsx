@@ -1,10 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-import Image from 'next/image'
-import Link from 'next/link'
+import 'swiper/css'
+import 'swiper/css/navigation'
+
+import { FreeMode, Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Page, Product } from '../../../payload/payload-types'
 import { productsBestsellers, productsLatest } from '../../_api/products'
+import { ProductSliderItem } from './ProductSliderItem'
 
 type Props = Extract<Page['layout'][0], { blockType: 'productsSlider' }>
 
@@ -15,9 +19,9 @@ export const ProductsSliderBlock: React.FC<Props> = props => {
   const getHeader = () => {
     switch (ListType) {
       case 'Bestsellers':
-        return <h4>Bestsellers</h4>
+        return <h4 className="mb-4 text-h4 font-h4">Bestsellers</h4>
       case 'Recent':
-        return <h4>Recently Added</h4>
+        return <h4 className="mb-4 text-h4 font-h4">Niedawno dodane</h4>
     }
   }
 
@@ -39,28 +43,40 @@ export const ProductsSliderBlock: React.FC<Props> = props => {
   return (
     <div>
       {getHeader()}
-      <div className="flex flex-row gap-2">
-        {products.map(p => (
-          <Link href={`/products/${p.slug}`} className="flex flex-col w-60">
-            <div className="flex flex-row flex-wrap items-end gap-2">
-              {p.mediaImages.map(i => (
-                <Image
-                  src={i.url}
-                  alt="product image"
-                  width={i.isMain ? 100 : 40}
-                  height={i.isMain ? 100 : 40}
-                />
-              ))}
-            </div>
 
-            <p>
-              <strong>{p.name}</strong>
-            </p>
-            <p>{p.vat}</p>
-            <p>{p.price}</p>
-          </Link>
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={30}
+        modules={[FreeMode, Navigation]}
+        autoplay={true}
+        navigation={true}
+        loop={products.length >= 4}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          1280: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+        }}
+        style={{ paddingLeft: '20px', paddingRight: '20px' }}
+      >
+        {products.map(p => (
+          <SwiperSlide key={p.id} className="!h-auto">
+            <ProductSliderItem product={p} />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   )
 }

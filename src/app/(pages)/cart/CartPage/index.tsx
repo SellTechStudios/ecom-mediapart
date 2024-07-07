@@ -70,19 +70,20 @@ export const CartPage: React.FC<{
                       const {
                         quantity,
                         product,
-                        product: { id, title, meta, stripeProductID },
+                        product: { id, title, mediaImages },
                       } = item
 
-                      const isLast = index === (cart?.items?.length || 0) - 1
+                      // const isLast = index === (cart?.items?.length || 0) - 1
 
-                      const metaImage = meta?.image
+                      // const metaImage = meta?.image
 
                       return (
                         <CartItem
                           key={id}
                           product={product}
                           title={title}
-                          metaImage={metaImage}
+                          // metaImage={metaImage}
+                          image={mediaImages[0]}
                           qty={quantity}
                           addItemToCart={addItemToCart}
                         />

@@ -40,7 +40,13 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
         <nav className="container flex flex-row items-start justify-between mx-auto align-top">
           {/* contact info */}
           <div className="flex flex-col gap-6">
-            <Image src="/mediapart_logo.png" width={200} height={100} alt="Mediapart Logo" />
+            <Image
+              src="/mediapart_logo.png"
+              width={200}
+              height={100}
+              alt="Mediapart Logo"
+              style={{ width: 'auto', height: 'auto' }}
+            />
             <div className="flex flex-row items-center gap-2">
               <MapPinIcon className="size-4" />
               <span>

@@ -1,14 +1,11 @@
 'use client'
 
-import React, { Fragment, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useCart } from '../../_providers/Cart'
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import { useCart } from '../../_providers/Cart'
 
-export const CartLink: React.FC<{
-  className?: string
-}> = props => {
-  const { className } = props
+export const CartLink: React.FC = () => {
   const { cart } = useCart()
   const [length, setLength] = useState<number>()
 
@@ -17,7 +14,7 @@ export const CartLink: React.FC<{
   }, [cart])
 
   return (
-    <Link href="/cart">
+    <Link href="/cart" className="flex items-center gap-1">
       <ShoppingBagIcon className="size-5" />
       {typeof length === 'number' && length > 0 && <small>({length})</small>}
     </Link>
