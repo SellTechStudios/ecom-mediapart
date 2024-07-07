@@ -17,7 +17,14 @@ const HeaderComponent = ({ header }: { header: Header }) => {
     <header className="py-4">
       <Container className="flex flex-row items-center justify-between">
         <Link href="/">
-          <Image src="/mediapart_logo.png" alt="Mediapart Logo" width={200} height={100} />
+          <Image
+            src="/mediapart_logo.png"
+            alt="Mediapart Logo"
+            width={200}
+            height={100}
+            priority
+            style={{ width: 'auto', height: 'auto' }}
+          />
         </Link>
 
         <nav className="flex flex-row gap-4 uppercase">

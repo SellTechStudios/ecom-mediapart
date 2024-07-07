@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useCallback } from 'react'
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useRouter } from 'next/navigation'
+import React, { useCallback } from 'react'
 
 import { Order } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
 import { Message } from '../../../_components/Message'
-import { priceFromJSON } from '../../../_components/Price'
 import { useCart } from '../../../_providers/Cart'
 
 import classes from './index.module.scss'

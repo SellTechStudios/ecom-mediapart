@@ -50,6 +50,7 @@
     "react-hook-form": "^7.45.1",
     "react-router-dom": "5.3.4",
     "stripe": "^15.7.0",
+    "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
