@@ -8,13 +8,14 @@ import { useAuth } from '../../../_providers/Auth'
 import { CartLink } from '../../CartLink'
 import { Container } from '../../Container'
 import { CMSLink } from '../../Link'
+import QuickSearchComponent from './quick-search'
 
 const HeaderComponent = ({ header }: { header: Header }) => {
   const { user } = useAuth()
   const navItems = header?.navItems || []
 
   return (
-    <header className="py-4">
+    <header className="flex flex-col gap-2 py-4">
       <Container className="flex flex-row items-center justify-between">
         <Link href="/">
           <Image
@@ -49,6 +50,10 @@ const HeaderComponent = ({ header }: { header: Header }) => {
             </Link>
           )}
         </div>
+      </Container>
+
+      <Container className="flex flex-row items-center">
+        <QuickSearchComponent />
       </Container>
     </header>
   )

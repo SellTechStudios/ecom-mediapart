@@ -5,12 +5,17 @@ import Image from 'next/image'
 export type ProductItem = Pick<Product, 'name' | 'ean' | 'price' | 'mediaImages'>
 
 type ProductsListProps = {
+  searchText: string
   endpointName: string
 }
 
-export const ProductsList = async ({ endpointName }: ProductsListProps) => {
-  const response = await fetch(endpointName)
+export const ProductsList = async ({ searchText, endpointName }: ProductsListProps) => {
+  const response = await fetch(`${endpointName}?text=${searchText}`)
   const products = (await response.json()) as ProductItem[]
+
+  if (products?.length == 0) {
+    return <h1>No products found</h1>
+  }
 
   return (
     <Container>
