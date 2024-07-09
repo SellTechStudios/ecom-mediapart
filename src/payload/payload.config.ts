@@ -32,6 +32,13 @@ import {
   Warehouse,
 } from './collections'
 import { Settings, Header, Footer, ProductImportsAdmin } from './globals'
+import {
+  atlasSearch,
+  productsNew,
+  productsOutlet,
+  productsPromoted,
+  productsQuickSearch,
+} from './endpoints/atlasSearch'
 
 const generateTitle: GenerateTitle = () => {
   return 'MediaPart'
@@ -127,12 +134,35 @@ export default buildConfig({
       method: 'get',
       handler: productsProxy,
     },
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
     {
       path: '/seed',
       method: 'get',
       handler: seed,
+    },
+    {
+      path: '/ecom/products/quicksearch',
+      method: 'get',
+      handler: productsQuickSearch,
+    },
+    {
+      path: '/ecom/products/new',
+      method: 'get',
+      handler: productsNew,
+    },
+    {
+      path: '/ecom/products/outlet',
+      method: 'get',
+      handler: productsOutlet,
+    },
+    {
+      path: '/ecom/products/promoted',
+      method: 'get',
+      handler: productsPromoted,
+    },
+    {
+      path: '/atlas',
+      method: 'get',
+      handler: atlasSearch,
     },
   ],
   plugins: [

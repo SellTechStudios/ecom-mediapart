@@ -5,8 +5,8 @@ import { ProductsList } from '../components/ProductList'
 export default async () => {
   return (
     <Container>
-      <h1>Promoted Products</h1>
-      <ProductsList endpointName={EndpointNames.Products.Promoted} />
+      <h1>Quick Search Results</h1>
+      <ProductsList endpointName={EndpointNames.Products.QuickSearch} />
     </Container>
   )
 }
