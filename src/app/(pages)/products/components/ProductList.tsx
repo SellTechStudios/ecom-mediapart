@@ -2,10 +2,10 @@ import { Product } from '../../../../payload/payload-types'
 import { Container } from '../../../_components/Container'
 import Image from 'next/image'
 
-export type ProductItem = Pick<Product, 'name' | 'ean' | 'price' | 'mediaImages'>
+export type ProductItem = Pick<Product, 'id' | 'name' | 'ean' | 'price' | 'mediaImages'>
 
 type ProductsListProps = {
-  searchText: string
+  searchText?: string
   endpointName: string
 }
 
@@ -20,7 +20,7 @@ export const ProductsList = async ({ searchText, endpointName }: ProductsListPro
   return (
     <Container>
       {products.map(p => (
-        <div>
+        <div key={p.id}>
           <Image
             className="object-cover w-auto h-full"
             src={p.mediaImages[0].url}

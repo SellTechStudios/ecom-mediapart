@@ -1,6 +1,21 @@
 import type { ProductCategory } from '../../payload/payload-types'
 import { BuildRequest } from '../../payload/utilities/graphqlUtils'
 
+export const categoryFetchAll = async (): Promise<ProductCategory[]> => {
+  const body = {
+    query: `query ProductCategories {
+        ProductCategories  {
+          docs {
+            id
+            name
+          }
+        }
+      }`,
+  }
+  const json = await BuildRequest(body)
+  return json.data?.ProductCategories?.docs
+}
+
 export const categoryFetchByErpId = async (erpId: string): Promise<ProductCategory> => {
   const body = {
     query: `query ProductCategories {

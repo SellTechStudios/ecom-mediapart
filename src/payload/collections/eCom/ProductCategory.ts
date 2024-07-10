@@ -1,9 +1,16 @@
 import type { CollectionConfig } from 'payload/types'
+import { admins } from '../../access/admins'
 
 const ProductCategory: CollectionConfig = {
   slug: 'product-category',
   admin: {
     useAsTitle: 'name',
+  },
+  access: {
+    read: () => true,
+    create: admins,
+    update: admins,
+    delete: admins,
   },
   fields: [
     {

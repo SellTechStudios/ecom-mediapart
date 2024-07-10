@@ -27,7 +27,7 @@ export interface Config {
     users: User;
     uom: Uom;
     warehouses: Warehouse;
-    'product-category': ProductCategory;
+    'product-categories': ProductCategory;
     manufacturer: Manufacturer;
     redirects: Redirect;
     'payload-preferences': PayloadPreference;
