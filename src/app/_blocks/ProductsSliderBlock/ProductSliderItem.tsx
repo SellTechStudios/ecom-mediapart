@@ -21,7 +21,7 @@ export const ProductSliderItem: React.FC<ProductSliderItemProps> = ({
       >
         {product.mediaImages[0] && (
           <Image
-            className="object-cover w-auto h-full"
+            className="object-cover w-auto h-[350px]"
             src={product.mediaImages[0].url}
             width={100}
             height={280}

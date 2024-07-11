@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-import { FreeMode, Navigation } from 'swiper/modules'
+import { Autoplay, FreeMode, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Page, Product } from '../../../payload/payload-types'
 import { productsBestsellers, productsLatest } from '../../_api/products'
@@ -47,9 +47,9 @@ export const ProductsSliderBlock: React.FC<Props> = props => {
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
-        modules={[FreeMode, Navigation]}
-        autoplay={true}
-        navigation={true}
+        modules={[FreeMode, Navigation, Autoplay]}
+        autoplay={{ delay: 5000 }}
+        navigation
         loop={products.length >= 4}
         breakpoints={{
           640: {

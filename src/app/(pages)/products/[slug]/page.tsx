@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 import { CollectionMeta } from '../../../../payload/collections/_interfaces/collection-meta'
@@ -10,6 +9,7 @@ import { fetchDocs } from '../../../_api/fetchDocs'
 import { productFetchBySlug } from '../../../_api/products'
 import { AddToCartButton } from '../../../_components/AddToCartButton'
 import { Container } from '../../../_components/Container'
+import { ProductGallery } from '../../../_components/ProductDetails/ProductGallery'
 import { generateMeta } from '../../../_utilities/generateMeta'
 
 // Force this page to be dynamic so that Next.js does not cache it
@@ -31,22 +31,23 @@ export default async function Product({ params: { slug } }) {
 
   return (
     <Container>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="flex flex-row items-start">
-          {product.mediaImages.map((img, i) => (
-            <Image key={i} src={img.url} width={100} height={100} alt={''} />
-          ))}
-        </div>
+      <section className="md:gap-4 md:grid md:grid-cols-2">
+        <ProductGallery product={product} />
         <div>
-          <h1>{product.name}</h1>
-          <h2>{product.price} PLN</h2>
+          <h1 className="leading-10 text-h1 font-h1">{product.name}</h1>
+          <h2 className="text-red-600 text-h2 font-h2">
+            {new Intl.NumberFormat('pl-PL', {
+              style: 'currency',
+              currency: 'PLN',
+            }).format(product.price)}
+          </h2>
           <AddToCartButton product={product} />
         </div>
-        <div className="col-span-2">
-          <h1>Opis Produktu</h1>
-          <div dangerouslySetInnerHTML={{ __html: product.description }} />
-        </div>
-      </div>
+      </section>
+      <section className="h-full mt-8">
+        <h1 className="text-h3 font-h3">Opis Produktu</h1>
+        <div dangerouslySetInnerHTML={{ __html: product.description }} />
+      </section>
     </Container>
   )
 }
@@ -54,7 +55,7 @@ export default async function Product({ params: { slug } }) {
 export async function generateStaticParams() {
   try {
     const products = await fetchDocs<ProductType>('products')
-    return products?.map(({ slug }) => slug)
+    return products?.map(({ slug }) => ({ slug })) || []
   } catch (error) {
     return []
   }
