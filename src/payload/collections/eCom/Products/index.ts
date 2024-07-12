@@ -136,6 +136,24 @@ const Products: CollectionConfig = {
           ],
         },
         {
+          label: 'Related Products',
+          fields: [
+            {
+              name: 'relatedProducts',
+              type: 'relationship',
+              relationTo: 'products',
+              hasMany: true,
+              filterOptions: ({ id }) => {
+                return {
+                  id: {
+                    not_in: [id],
+                  },
+                }
+              },
+            },
+          ],
+        },
+        {
           label: 'SEO',
           fields: [
             {
@@ -182,19 +200,6 @@ const Products: CollectionConfig = {
       hasMany: false,
       admin: {
         position: 'sidebar',
-      },
-    },
-    {
-      name: 'relatedProducts',
-      type: 'relationship',
-      relationTo: 'products',
-      hasMany: true,
-      filterOptions: ({ id }) => {
-        return {
-          id: {
-            not_in: [id],
-          },
-        }
       },
     },
     slugField(),

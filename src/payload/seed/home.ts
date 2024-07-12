@@ -4,10 +4,9 @@ export const home: Partial<Page> = {
   title: 'Home',
   slug: 'home',
   _status: 'published',
-  meta: {
-    title: 'Mediapart',
-    description: '',
-  },
+  seoTitle: 'Mediapart',
+  seoDescription: '',
+  seoImageUrl: '',
   layout: [
     {
       blockName: 'Recent Products',

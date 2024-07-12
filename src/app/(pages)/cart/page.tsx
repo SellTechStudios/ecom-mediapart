@@ -47,8 +47,8 @@ export default async function Cart() {
   return (
     <div>
       <Container>
-        <h3 data-chomik="tcdsfjsfkjhk">Cart</h3>
-        <CartPage settings={settings} page={page} />
+        <h3>Cart</h3>
+        <CartPage settings={settings} />
       </Container>
       <Blocks blocks={page?.layout} disableBottomPadding />
     </div>
