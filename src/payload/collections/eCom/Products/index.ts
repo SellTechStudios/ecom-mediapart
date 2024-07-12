@@ -1,8 +1,6 @@
 import type { CollectionConfig } from 'payload/types'
 import { admins } from '../../../access/admins'
 import { slugField } from '../../../fields/slug'
-import { populateArchiveBlock } from '../../../hooks/populateArchiveBlock'
-import { beforeProductChange } from './hooks/beforeChange'
 import { deleteProductFromCarts } from './hooks/deleteProductFromCarts'
 import { revalidateProduct } from './hooks/revalidateProduct'
 
@@ -10,7 +8,7 @@ const Products: CollectionConfig = {
   slug: 'products',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'stripeProductID', '_status'],
+    defaultColumns: ['title', '_status'],
     preview: doc => {
       return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/preview?url=${encodeURIComponent(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/products/${doc.slug}`,
