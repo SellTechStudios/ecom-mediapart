@@ -1,15 +1,14 @@
-import { EndpointNames } from '../../../../payload/endpoints'
-import { CategoryNavigation } from '../../../_components'
 import { Container } from '../../../_components/Container'
+import { CategoryNavigation } from '../components/CategoryNavigation'
 import { ProductsList } from '../components/ProductList'
 
-export default async () => {
+export default () => {
   return (
     <Container className="grid grid-cols-4">
       <CategoryNavigation />
       <div className="col-span-3">
         <h1>Outlet Products</h1>
-        <ProductsList endpointName={EndpointNames.Products.Outlet} />
+        <ProductsList listType="outlet" />
       </div>
     </Container>
   )

@@ -1,40 +1,14 @@
-import { draftMode } from 'next/headers'
-
-import { Page, ProductCategory } from '../../../payload/payload-types'
-import { fetchDoc } from '../../_api/fetchDoc'
-import { fetchDocs } from '../../_api/fetchDocs'
-import { Blocks } from '../../_components/Blocks'
 import { Container } from '../../_components/Container'
-import { HR } from '../../_components/HR'
-import Filters from './Filters'
+import { CategoryNavigation } from './components/CategoryNavigation'
+import { ProductsList } from './components/ProductList'
 
-const Products = async () => {
-  const { isEnabled: isDraftMode } = draftMode()
-
-  let page: Page | null = null
-  let categories: ProductCategory[] | null = null
-
-  try {
-    page = await fetchDoc<Page>({
-      collection: 'pages',
-      slug: 'products',
-      draft: isDraftMode,
-    })
-
-    categories = await fetchDocs<ProductCategory>('product-category')
-  } catch (error) {
-    console.log(error)
-  }
-
+export default () => {
   return (
-    <div>
-      <Container>
-        <Filters categories={categories} />
-        <Blocks blocks={page?.layout} disableTopPadding={true} />
-      </Container>
-      <HR />
-    </div>
+    <Container className="grid grid-cols-4">
+      <CategoryNavigation />
+      <div className="col-span-3">
+        <ProductsList listType="all" />
+      </div>
+    </Container>
   )
 }
-
-export default Products

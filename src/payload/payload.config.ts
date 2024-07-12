@@ -14,9 +14,6 @@ import { buildConfig } from 'payload/config'
 
 import BeforeDashboard from './components/BeforeDashboard'
 import BeforeLogin from './components/BeforeDashboard/BeforeLogin'
-import { createPaymentIntent } from './endpoints/create-payment-intent'
-import { customersProxy } from './endpoints/customers'
-import { productsProxy } from './endpoints/products'
 import { seed } from './endpoints/seed'
 import { priceUpdated } from './stripe/webhooks/priceUpdated'
 import { productUpdated } from './stripe/webhooks/productUpdated'
@@ -32,13 +29,6 @@ import {
   Warehouse,
 } from './collections'
 import { Settings, Header, Footer, ProductImportsAdmin } from './globals'
-import {
-  atlasSearch,
-  productsNew,
-  productsOutlet,
-  productsPromoted,
-  productsQuickSearch,
-} from './endpoints/atlasSearch'
 
 const generateTitle: GenerateTitle = () => {
   return 'MediaPart'
@@ -76,9 +66,6 @@ export default buildConfig({
             [path.resolve(__dirname, 'collections/Users/hooks/createStripeCustomer')]:
               mockModulePath,
             [path.resolve(__dirname, 'collections/Users/endpoints/customer')]: mockModulePath,
-            [path.resolve(__dirname, 'endpoints/create-payment-intent')]: mockModulePath,
-            [path.resolve(__dirname, 'endpoints/customers')]: mockModulePath,
-            [path.resolve(__dirname, 'endpoints/products')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/seed')]: mockModulePath,
             stripe: mockModulePath,
             express: mockModulePath,
@@ -120,49 +107,9 @@ export default buildConfig({
   ),
   endpoints: [
     {
-      path: '/create-payment-intent',
-      method: 'post',
-      handler: createPaymentIntent,
-    },
-    {
-      path: '/stripe/customers',
-      method: 'get',
-      handler: customersProxy,
-    },
-    {
-      path: '/stripe/products',
-      method: 'get',
-      handler: productsProxy,
-    },
-    {
       path: '/seed',
       method: 'get',
       handler: seed,
-    },
-    {
-      path: '/ecom/products/quicksearch',
-      method: 'get',
-      handler: productsQuickSearch,
-    },
-    {
-      path: '/ecom/products/new',
-      method: 'get',
-      handler: productsNew,
-    },
-    {
-      path: '/ecom/products/outlet',
-      method: 'get',
-      handler: productsOutlet,
-    },
-    {
-      path: '/ecom/products/promoted',
-      method: 'get',
-      handler: productsPromoted,
-    },
-    {
-      path: '/atlas',
-      method: 'get',
-      handler: atlasSearch,
     },
   ],
   plugins: [

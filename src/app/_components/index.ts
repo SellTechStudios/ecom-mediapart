@@ -1,3 +1,3 @@
-import { CategoryNavigation } from './CategoryNavigation'
+import { CategoryNavigation } from '../(pages)/products/components/CategoryNavigation'
 
 export { CategoryNavigation }
