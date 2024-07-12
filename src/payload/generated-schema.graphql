@@ -3555,7 +3555,6 @@ input versionsProduct_where_or {
 type Order {
   id: String
   orderedBy: User
-  stripePaymentIntentID: String
   total: Float!
   items: [Order_Items!]
   updatedAt: DateTime
@@ -3567,7 +3566,6 @@ type User {
   name: String
   roles: [User_roles!]
   purchases(draft: Boolean): [Product!]
-  stripeCustomerID: String
   cart: User_Cart
   skipSync: Boolean
   updatedAt: DateTime
@@ -3625,7 +3623,6 @@ type Orders {
 
 input Order_where {
   orderedBy: Order_orderedBy_operator
-  stripePaymentIntentID: Order_stripePaymentIntentID_operator
   total: Order_total_operator
   items__product: Order_items__product_operator
   items__price: Order_items__price_operator
@@ -3644,17 +3641,6 @@ input Order_orderedBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
-}
-
-input Order_stripePaymentIntentID_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
   exists: Boolean
 }
 
@@ -3741,7 +3727,6 @@ input Order_id_operator {
 
 input Order_where_and {
   orderedBy: Order_orderedBy_operator
-  stripePaymentIntentID: Order_stripePaymentIntentID_operator
   total: Order_total_operator
   items__product: Order_items__product_operator
   items__price: Order_items__price_operator
@@ -3756,7 +3741,6 @@ input Order_where_and {
 
 input Order_where_or {
   orderedBy: Order_orderedBy_operator
-  stripePaymentIntentID: Order_stripePaymentIntentID_operator
   total: Order_total_operator
   items__product: Order_items__product_operator
   items__price: Order_items__price_operator
@@ -3783,7 +3767,6 @@ type ordersDocAccess {
 
 type OrdersDocAccessFields {
   orderedBy: OrdersDocAccessFields_orderedBy
-  stripePaymentIntentID: OrdersDocAccessFields_stripePaymentIntentID
   total: OrdersDocAccessFields_total
   items: OrdersDocAccessFields_items
   updatedAt: OrdersDocAccessFields_updatedAt
@@ -3810,29 +3793,6 @@ type OrdersDocAccessFields_orderedBy_Update {
 }
 
 type OrdersDocAccessFields_orderedBy_Delete {
-  permission: Boolean!
-}
-
-type OrdersDocAccessFields_stripePaymentIntentID {
-  create: OrdersDocAccessFields_stripePaymentIntentID_Create
-  read: OrdersDocAccessFields_stripePaymentIntentID_Read
-  update: OrdersDocAccessFields_stripePaymentIntentID_Update
-  delete: OrdersDocAccessFields_stripePaymentIntentID_Delete
-}
-
-type OrdersDocAccessFields_stripePaymentIntentID_Create {
-  permission: Boolean!
-}
-
-type OrdersDocAccessFields_stripePaymentIntentID_Read {
-  permission: Boolean!
-}
-
-type OrdersDocAccessFields_stripePaymentIntentID_Update {
-  permission: Boolean!
-}
-
-type OrdersDocAccessFields_stripePaymentIntentID_Delete {
   permission: Boolean!
 }
 
@@ -4591,7 +4551,6 @@ input User_where {
   name: User_name_operator
   roles: User_roles_operator
   purchases: User_purchases_operator
-  stripeCustomerID: User_stripeCustomerID_operator
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
@@ -4635,17 +4594,6 @@ input User_purchases_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
-}
-
-input User_stripeCustomerID_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
   exists: Boolean
 }
 
@@ -4732,7 +4680,6 @@ input User_where_and {
   name: User_name_operator
   roles: User_roles_operator
   purchases: User_purchases_operator
-  stripeCustomerID: User_stripeCustomerID_operator
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
@@ -4749,7 +4696,6 @@ input User_where_or {
   name: User_name_operator
   roles: User_roles_operator
   purchases: User_purchases_operator
-  stripeCustomerID: User_stripeCustomerID_operator
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
@@ -4779,7 +4725,6 @@ type UsersDocAccessFields {
   name: UsersDocAccessFields_name
   roles: UsersDocAccessFields_roles
   purchases: UsersDocAccessFields_purchases
-  stripeCustomerID: UsersDocAccessFields_stripeCustomerID
   cart: UsersDocAccessFields_cart
   skipSync: UsersDocAccessFields_skipSync
   updatedAt: UsersDocAccessFields_updatedAt
@@ -4854,29 +4799,6 @@ type UsersDocAccessFields_purchases_Update {
 }
 
 type UsersDocAccessFields_purchases_Delete {
-  permission: Boolean!
-}
-
-type UsersDocAccessFields_stripeCustomerID {
-  create: UsersDocAccessFields_stripeCustomerID_Create
-  read: UsersDocAccessFields_stripeCustomerID_Read
-  update: UsersDocAccessFields_stripeCustomerID_Update
-  delete: UsersDocAccessFields_stripeCustomerID_Delete
-}
-
-type UsersDocAccessFields_stripeCustomerID_Create {
-  permission: Boolean!
-}
-
-type UsersDocAccessFields_stripeCustomerID_Read {
-  permission: Boolean!
-}
-
-type UsersDocAccessFields_stripeCustomerID_Update {
-  permission: Boolean!
-}
-
-type UsersDocAccessFields_stripeCustomerID_Delete {
   permission: Boolean!
 }
 
@@ -9420,7 +9342,6 @@ type ordersAccess {
 
 type OrdersFields {
   orderedBy: OrdersFields_orderedBy
-  stripePaymentIntentID: OrdersFields_stripePaymentIntentID
   total: OrdersFields_total
   items: OrdersFields_items
   updatedAt: OrdersFields_updatedAt
@@ -9447,29 +9368,6 @@ type OrdersFields_orderedBy_Update {
 }
 
 type OrdersFields_orderedBy_Delete {
-  permission: Boolean!
-}
-
-type OrdersFields_stripePaymentIntentID {
-  create: OrdersFields_stripePaymentIntentID_Create
-  read: OrdersFields_stripePaymentIntentID_Read
-  update: OrdersFields_stripePaymentIntentID_Update
-  delete: OrdersFields_stripePaymentIntentID_Delete
-}
-
-type OrdersFields_stripePaymentIntentID_Create {
-  permission: Boolean!
-}
-
-type OrdersFields_stripePaymentIntentID_Read {
-  permission: Boolean!
-}
-
-type OrdersFields_stripePaymentIntentID_Update {
-  permission: Boolean!
-}
-
-type OrdersFields_stripePaymentIntentID_Delete {
   permission: Boolean!
 }
 
@@ -10017,7 +9915,6 @@ type UsersFields {
   name: UsersFields_name
   roles: UsersFields_roles
   purchases: UsersFields_purchases
-  stripeCustomerID: UsersFields_stripeCustomerID
   cart: UsersFields_cart
   skipSync: UsersFields_skipSync
   updatedAt: UsersFields_updatedAt
@@ -10092,29 +9989,6 @@ type UsersFields_purchases_Update {
 }
 
 type UsersFields_purchases_Delete {
-  permission: Boolean!
-}
-
-type UsersFields_stripeCustomerID {
-  create: UsersFields_stripeCustomerID_Create
-  read: UsersFields_stripeCustomerID_Read
-  update: UsersFields_stripeCustomerID_Update
-  delete: UsersFields_stripeCustomerID_Delete
-}
-
-type UsersFields_stripeCustomerID_Create {
-  permission: Boolean!
-}
-
-type UsersFields_stripeCustomerID_Read {
-  permission: Boolean!
-}
-
-type UsersFields_stripeCustomerID_Update {
-  permission: Boolean!
-}
-
-type UsersFields_stripeCustomerID_Delete {
   permission: Boolean!
 }
 
@@ -12388,7 +12262,6 @@ enum ProductUpdate__status_MutationInput {
 
 input mutationOrderInput {
   orderedBy: String
-  stripePaymentIntentID: String
   total: Float!
   items: [mutationOrder_ItemsInput]
   updatedAt: String
@@ -12404,7 +12277,6 @@ input mutationOrder_ItemsInput {
 
 input mutationOrderUpdateInput {
   orderedBy: String
-  stripePaymentIntentID: String
   total: Float
   items: [mutationOrderUpdate_ItemsInput]
   updatedAt: String
@@ -12452,7 +12324,6 @@ input mutationUserInput {
   name: String
   roles: [User_roles_MutationInput]
   purchases: [String]
-  stripeCustomerID: String
   cart: mutationUser_CartInput
   skipSync: Boolean
   updatedAt: String
@@ -12486,7 +12357,6 @@ input mutationUserUpdateInput {
   name: String
   roles: [UserUpdate_roles_MutationInput]
   purchases: [String]
-  stripeCustomerID: String
   cart: mutationUserUpdate_CartInput
   skipSync: Boolean
   updatedAt: String

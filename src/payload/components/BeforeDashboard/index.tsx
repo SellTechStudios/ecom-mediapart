@@ -23,37 +23,6 @@ const BeforeDashboard: React.FC = () => {
           {' to see the results.'}
         </li>
         <li>
-          {'Head over to '}
-          <a
-            href="https://dashboard.stripe.com/test/apikeys"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {'Stripe to obtain your API Keys'}
-          </a>
-          {
-            '. Create a new account if needed, then copy them into your environment variables and restart your server. See the '
-          }
-          <a
-            href="https://github.com/payloadcms/payload/blob/main/templates/ecommerce/README.md#stripe"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {'README'}
-          </a>
-          {' for more details.'}
-        </li>
-        <li>
-          <Link href="/admin/collections/products">Link each of your products</Link>
-          {' to Stripe by selecting the corresponding product using the dropdown under '}
-          <i>Product Details</i>.
-        </li>
-        <li>
-          If you created this repo using Payload Cloud, head over to GitHub and clone it to your
-          local machine. It will be under the <i>GitHub Scope</i> that you selected when creating
-          this project.
-        </li>
-        <li>
           {'Modify your '}
           <a
             href="https://payloadcms.com/docs/configuration/collections"

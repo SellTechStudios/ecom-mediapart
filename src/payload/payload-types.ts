@@ -27,7 +27,7 @@ export interface Config {
     users: User;
     uom: Uom;
     warehouses: Warehouse;
-    'product-categories': ProductCategory;
+    'product-category': ProductCategory;
     manufacturer: Manufacturer;
     redirects: Redirect;
     'payload-preferences': PayloadPreference;
@@ -270,7 +270,6 @@ export interface Warehouse {
 export interface Order {
   id: string;
   orderedBy?: (string | null) | User;
-  stripePaymentIntentID?: string | null;
   total: number;
   items?:
     | {
@@ -292,7 +291,6 @@ export interface User {
   name?: string | null;
   roles?: ('admin' | 'customer')[] | null;
   purchases?: (string | Product)[] | null;
-  stripeCustomerID?: string | null;
   cart?: {
     items?: CartItems;
   };

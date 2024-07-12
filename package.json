@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
-    "stripe:webhooks": "stripe listen --forward-to localhost:8000/stripe/webhooks",
     "seed": "cross-env PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=false PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts ts-node src/server.ts",
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload build",
     "build:server": "tsc --project tsconfig.server.json",
@@ -29,10 +28,7 @@
     "@payloadcms/plugin-nested-docs": "^1.0.12",
     "@payloadcms/plugin-redirects": "^1.0.2",
     "@payloadcms/plugin-seo": "^2.3.2",
-    "@payloadcms/plugin-stripe": "^0.0.19",
     "@payloadcms/richtext-slate": "^1.5.2",
-    "@stripe/react-stripe-js": "^2.7.1",
-    "@stripe/stripe-js": "^3.4.0",
     "basic-ftp": "^5.0.5",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
@@ -50,7 +46,6 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "react-router-dom": "5.3.4",
-    "stripe": "^15.7.0",
     "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0"
   },
