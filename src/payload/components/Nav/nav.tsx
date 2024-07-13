@@ -4,12 +4,11 @@ import { NavLink } from 'react-router-dom'
 
 import type { EntityToGroup, Group } from 'payload/dist/admin/utilities/groupNavItems'
 
-import { getTranslation } from 'payload/dist/utilities/getTranslation'
-import { EntityType, groupNavItems } from 'payload/dist/admin/utilities/groupNavItems'
-import Chevron from 'payload/components/icons'
-import { useConfig, useAuth } from 'payload/components/utilities'
-import Logout from 'payload/dist/admin/components/elements/Logout'
 import { useNav } from 'payload/components/elements'
+import { useAuth, useConfig } from 'payload/components/utilities'
+import Logout from 'payload/dist/admin/components/elements/Logout'
+import { EntityType, groupNavItems } from 'payload/dist/admin/utilities/groupNavItems'
+import { getTranslation } from 'payload/dist/utilities/getTranslation'
 
 import { Hamburger } from './hamburger/hamburger'
 import NavGroup from './nav-group/nav-group'
