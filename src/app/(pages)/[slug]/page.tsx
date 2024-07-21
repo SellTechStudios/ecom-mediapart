@@ -21,19 +21,11 @@ export const dynamic = 'force-dynamic'
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
-  let page: PageType | null = null
-  try {
-    page = await fetchDoc<PageType>({
-      collection: 'pages',
-      slug,
-      draft: isDraftMode,
-    })
-  } catch (error) {
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    // so swallow the error here and simply render the page with fallback data where necessary
-    // in production you may want to redirect to a 404  page or at least log the error somewhere
-    // console.error(error)
-  }
+  const page = await fetchDoc<PageType>({
+    collection: 'pages',
+    slug,
+    draft: isDraftMode,
+  })
 
   if (!page) {
     return notFound()

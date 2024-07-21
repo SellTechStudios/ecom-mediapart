@@ -1,4 +1,3 @@
-import React from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -19,27 +18,21 @@ export default async function Orders() {
     )}&redirect=${encodeURIComponent('/orders')}`,
   })
 
-  let orders: Order[] | null = null
-
-  try {
-    orders = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${token}`,
-      },
-      cache: 'no-store',
+  const orders: Order[] | null = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `JWT ${token}`,
+    },
+    cache: 'no-store',
+  })
+    ?.then(async res => {
+      if (!res.ok) notFound()
+      const json = await res.json()
+      if ('error' in json && json.error) notFound()
+      if ('errors' in json && json.errors) notFound()
+      return json
     })
-      ?.then(async res => {
-        if (!res.ok) notFound()
-        const json = await res.json()
-        if ('error' in json && json.error) notFound()
-        if ('errors' in json && json.errors) notFound()
-        return json
-      })
-      ?.then(json => json.docs)
-  } catch (error) {
-    console.error(error)
-  }
+    ?.then(json => json.docs)
 
   return (
     <div>

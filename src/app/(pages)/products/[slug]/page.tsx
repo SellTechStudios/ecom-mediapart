@@ -17,13 +17,7 @@ import { generateMeta } from '../../../_utilities/generateMeta'
 export const dynamic = 'force-dynamic'
 
 export default async function Product({ params: { slug } }) {
-  let product: ProductType | null = null
-
-  try {
-    product = await productFetchBySlug(slug)
-  } catch (error) {
-    console.error(error) // eslint-disable-line no-console
-  }
+  const product: ProductType | null = await productFetchBySlug(slug)
 
   if (!product) {
     notFound()

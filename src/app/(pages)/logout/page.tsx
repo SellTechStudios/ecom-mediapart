@@ -9,16 +9,7 @@ import { LogoutPage } from './LogoutPage'
 import classes from './index.module.scss'
 
 export default async function Logout() {
-  let settings: Settings | null = null
-
-  try {
-    settings = await fetchSettings()
-  } catch (error) {
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    // so swallow the error here and simply render the page with fallback data where necessary
-    // in production you may want to redirect to a 404  page or at least log the error somewhere
-    // console.error(error)
-  }
+  const settings: Settings | null = await fetchSettings()
 
   return (
     <Container className={classes.logout}>

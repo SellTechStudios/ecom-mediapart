@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Fragment } from 'react'
 
-import { Orde as OrderType } from '../../../../../payload/payload-types'
+import { Order as OrderType } from '../../../../../payload/payload-types'
 import { HR } from '../../../../_components/HR'
 import { formatDateTime } from '../../../../_utilities/formatDateTime'
 import { getMeUser } from '../../../../_utilities/getMeUser'
@@ -18,24 +18,21 @@ export default async function Order({ params: { id } }) {
     )}&redirect=${encodeURIComponent(`/order/${id}`)}`,
   })
 
-  let order: OrderType | null = null
-
-  try {
-    order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`, {
+  const order: OrderType | null = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`,
+    {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
-    })?.then(async res => {
-      if (!res.ok) notFound()
-      const json = await res.json()
-      if ('error' in json && json.error) notFound()
-      if ('errors' in json && json.errors) notFound()
-      return json
-    })
-  } catch (error) {
-    console.error(error) // eslint-disable-line no-console
-  }
+    },
+  )?.then(async res => {
+    if (!res.ok) notFound()
+    const json = await res.json()
+    if ('error' in json && json.error) notFound()
+    if ('errors' in json && json.errors) notFound()
+    return json
+  })
 
   if (!order) {
     notFound()

@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-
+import { Suspense } from 'react'
 import { Container } from '../../_components/Container'
 import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
 import { ResetPasswordForm } from './ResetPasswordForm'
@@ -11,7 +11,9 @@ export default async function ResetPassword() {
     <Container className={classes.resetPassword}>
       <h1>Reset Password</h1>
       <p>Please enter a new password below.</p>
-      <ResetPasswordForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordForm />
+      </Suspense>
     </Container>
   )
 }
