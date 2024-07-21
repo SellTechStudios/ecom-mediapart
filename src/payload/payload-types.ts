@@ -225,13 +225,13 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  relatedProducts?: (string | Product)[] | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   seoImageUrl?: string | null;
   categories?: (string | ProductCategory)[] | null;
   manufacturer?: (string | null) | Manufacturer;
   warehouse?: (string | null) | Warehouse;
-  relatedProducts?: (string | Product)[] | null;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -444,9 +444,4 @@ export interface WholesalerImport {
   title?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-
-
-declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
 }

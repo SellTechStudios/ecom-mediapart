@@ -153,7 +153,7 @@ export const CartProvider = props => {
         .filter(Boolean) as CartItem[],
     }
 
-    if (user) {
+    if (user && !hasInitializedCart) {
       try {
         const syncCartToPayload = async () => {
           const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {

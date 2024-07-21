@@ -1,16 +1,16 @@
-import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 import type { DocumentTabComponent } from 'payload/dist/admin/components/elements/DocumentHeader/Tabs/types'
+import { Link, useLocation } from 'react-router-dom'
 
 import './index.scss'
 
 const Wholesaler1Tab: DocumentTabComponent = props => {
   const { path } = props
-  const match = useRouteMatch()
+  const location = useLocation()
 
   return (
-    <Link className="fd-dist-tab" to={`${match.url}${path}`}>
+    <Link className="fd-dist-tab" to={`${location.pathname}${path}`}>
       <Image
         className="image"
         src="/admin ui/fd-distribution-logo.svg"

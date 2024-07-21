@@ -11,9 +11,6 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 
-import BeforeDashboard from './components/BeforeDashboard'
-import BeforeLogin from './components/BeforeDashboard/BeforeLogin'
-import { seed } from './endpoints/seed'
 import {
   Manufacturer,
   Media,
@@ -25,7 +22,10 @@ import {
   Users,
   Warehouse,
 } from './collections'
-import { Settings, Header, Footer, ProductImportsAdmin } from './globals'
+import BeforeDashboard from './components/BeforeDashboard'
+import BeforeLogin from './components/BeforeDashboard/BeforeLogin'
+import { seed } from './endpoints/seed'
+import { Footer, Header, ProductImportsAdmin, Settings } from './globals'
 
 const generateTitle: GenerateTitle = () => {
   return 'MediaPart'

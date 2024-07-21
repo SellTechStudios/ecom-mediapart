@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 import { CollectionMeta } from '../../../payload/collections/_interfaces/collection-meta'
 import { Page, Settings } from '../../../payload/payload-types'
@@ -29,9 +28,9 @@ export default async function Cart() {
     // console.error(error)
   }
 
-  if (!page) {
-    return notFound()
-  }
+  // if (!page) {
+  //   return notFound()
+  // }
 
   let settings: Settings | null = null
 
@@ -70,5 +69,5 @@ export async function generateMetadata(): Promise<Metadata> {
     // in production you may want to redirect to a 404  page or at least log the error somewhere
   }
 
-  return generateMeta(page as CollectionMeta, page.slug)
+  return page?.slug ? generateMeta(page as CollectionMeta, page.slug) : {}
 }

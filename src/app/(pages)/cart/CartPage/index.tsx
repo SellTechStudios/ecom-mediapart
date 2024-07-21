@@ -14,7 +14,7 @@ import classes from './index.module.scss'
 
 export const CartPage: React.FC<{
   settings: Settings
-}> = props => {
+}> = () => {
   const { user } = useAuth()
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
 
