@@ -3,7 +3,7 @@ import type { BaseEditor } from 'slate'
 
 type RichTextPlugin = Exclude<RichTextCustomElement['plugins'], undefined>[0]
 
-const withLabel: RichTextPlugin = incomingEditor => {
+const withLabel = incomingEditor => {
   const editor: BaseEditor & {
     shouldBreakOutOnEnter?: (element: any) => boolean // eslint-disable-line @typescript-eslint/no-explicit-any
   } = incomingEditor

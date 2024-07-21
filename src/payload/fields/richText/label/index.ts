@@ -8,7 +8,7 @@ const richTextLabel: RichTextCustomElement = {
   name: 'label',
   Button,
   Element,
-  plugins: [withLabel],
+  plugins: [withLabel as any],
 }
 
 export default richTextLabel

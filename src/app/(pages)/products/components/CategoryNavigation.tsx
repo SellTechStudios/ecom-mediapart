@@ -1,19 +1,18 @@
-import React from 'react'
-import { categoryFetchAll } from '../../../_api/productCategories'
 import Link from 'next/link'
+import { ProductCategory } from '../../../../payload/payload-types'
 
 type CategoryNavigationProps = {
+  categories: ProductCategory[]
   id?: string
 }
 
-export const CategoryNavigation: React.FC = async ({ id }: CategoryNavigationProps) => {
-  const data = await categoryFetchAll()
-
+export const CategoryNavigation = ({ categories, id }: CategoryNavigationProps) => {
   return (
     <nav className="flex flex-col">
-      {data.map(c => {
+      {categories?.map(c => {
         return (
           <Link
+            key={c.id}
             href={`/products/category/${c.id}`}
             className={id == c.id ? 'bg-black text-white' : ''}
           >
