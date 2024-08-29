@@ -1,5 +1,5 @@
-import type { Product } from '../../payload/payload-types'
-import { BuildRequest } from '../../payload/utilities/graphqlUtils'
+import { Product } from 'src/payload-types'
+import { BuildRequest } from 'src/payload/utilities/graphqlUtils'
 
 export const productFetchByErpId = async (erpId: string): Promise<Product> => {
   const body = {
@@ -155,7 +155,7 @@ export const productsLatest = async (count: number): Promise<Product[]> => {
 export const productsBestsellers = async (count: number): Promise<Product[]> => {
   const body = {
     query: `query BestsellerProduct {
-              Products(sort: "createdAt",  limit:${count} ) {
+              Products(sort: "bestseller",  limit:${count} ) {
                   docs {
                     id
                     title

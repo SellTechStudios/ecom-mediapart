@@ -1,15 +1,10 @@
-import type { CollectionConfig } from 'payload/types'
-
+import { CollectionConfig } from 'payload'
 import { admins } from '../../access/admins'
 import { anyone } from '../../access/anyone'
 import adminsAndUser from './access/adminsAndUser'
 import { checkRole } from './checkRole'
-import { customerProxy } from './endpoints/customer'
-import { createStripeCustomer } from './hooks/createStripeCustomer'
 import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
-import { loginAfterCreate } from './hooks/loginAfterCreate'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
-import { CustomerSelect } from './ui/CustomerSelect'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -24,23 +19,7 @@ const Users: CollectionConfig = {
     delete: admins,
     admin: ({ req: { user } }) => checkRole(['admin'], user),
   },
-  hooks: {
-    beforeChange: [createStripeCustomer],
-    afterChange: [loginAfterCreate],
-  },
   auth: true,
-  endpoints: [
-    {
-      path: '/:teamID/customer',
-      method: 'get',
-      handler: customerProxy,
-    },
-    {
-      path: '/:teamID/customer',
-      method: 'patch',
-      handler: customerProxy,
-    },
-  ],
   fields: [
     {
       name: 'name',
@@ -78,20 +57,6 @@ const Users: CollectionConfig = {
       hasMany: true,
       hooks: {
         beforeChange: [resolveDuplicatePurchases],
-      },
-    },
-    {
-      name: 'stripeCustomerID',
-      label: 'Stripe Customer',
-      type: 'text',
-      access: {
-        read: ({ req: { user } }) => checkRole(['admin'], user),
-      },
-      admin: {
-        position: 'sidebar',
-        components: {
-          Field: CustomerSelect,
-        },
       },
     },
     {

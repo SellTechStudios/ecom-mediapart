@@ -25,7 +25,6 @@ export const PAGE = `
         layout {
           ${CONTENT}
           ${CALL_TO_ACTION}
-          ${CONTENT}
           ${MEDIA_BLOCK}
           ${ARCHIVE_BLOCK}
           ${PRODUCTS_SLIDER_BLOCK}

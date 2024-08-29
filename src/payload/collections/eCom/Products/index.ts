@@ -1,8 +1,6 @@
-import type { CollectionConfig } from 'payload/types'
+import { CollectionConfig } from 'payload'
 import { admins } from '../../../access/admins'
 import { slugField } from '../../../fields/slug'
-import { populateArchiveBlock } from '../../../hooks/populateArchiveBlock'
-import { beforeProductChange } from './hooks/beforeChange'
 import { deleteProductFromCarts } from './hooks/deleteProductFromCarts'
 import { revalidateProduct } from './hooks/revalidateProduct'
 
@@ -10,8 +8,8 @@ const Products: CollectionConfig = {
   slug: 'products',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'stripeProductID', '_status'],
-    preview: doc => {
+    defaultColumns: ['title', '_status'],
+    preview: (doc) => {
       return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/preview?url=${encodeURIComponent(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/products/${doc.slug}`,
       )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
@@ -138,6 +136,24 @@ const Products: CollectionConfig = {
           ],
         },
         {
+          label: 'Related Products',
+          fields: [
+            {
+              name: 'relatedProducts',
+              type: 'relationship',
+              relationTo: 'products',
+              hasMany: true,
+              filterOptions: ({ id }) => {
+                return {
+                  id: {
+                    not_in: [id],
+                  },
+                }
+              },
+            },
+          ],
+        },
+        {
           label: 'SEO',
           fields: [
             {
@@ -160,9 +176,10 @@ const Products: CollectionConfig = {
       ],
     },
     {
-      name: 'categories',
+      label: 'ERP Categories',
+      name: 'erpCategories',
       type: 'relationship',
-      relationTo: 'product-category',
+      relationTo: 'product-erp-category',
       hasMany: true,
       admin: {
         position: 'sidebar',
@@ -184,19 +201,6 @@ const Products: CollectionConfig = {
       hasMany: false,
       admin: {
         position: 'sidebar',
-      },
-    },
-    {
-      name: 'relatedProducts',
-      type: 'relationship',
-      relationTo: 'products',
-      hasMany: true,
-      filterOptions: ({ id }) => {
-        return {
-          id: {
-            not_in: [id],
-          },
-        }
       },
     },
     slugField(),

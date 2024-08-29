@@ -1,0 +1,39 @@
+'use client'
+
+import React, { Fragment, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useAuth } from '@/providers/Auth'
+
+export const LogoutPage: React.FC = () => {
+  const { logout } = useAuth()
+  const [success, setSuccess] = useState('')
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const performLogout = async () => {
+      try {
+        await logout()
+        setSuccess('Logged out successfully.')
+      } catch (_) {
+        setError('You are already logged out.')
+      }
+    }
+
+    performLogout()
+  }, [logout])
+
+  return (
+    <Fragment>
+      {(error || success) && (
+        <div>
+          <h1>{error || success}</h1>
+          <p>
+            {` To log back in, `}
+            <Link href="/login">click here</Link>
+            {'.'}
+          </p>
+        </div>
+      )}
+    </Fragment>
+  )
+}

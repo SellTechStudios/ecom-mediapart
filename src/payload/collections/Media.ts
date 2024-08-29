@@ -1,14 +1,26 @@
-import { slateEditor } from '@payloadcms/richtext-slate'
+import type { CollectionConfig } from 'payload'
+
+import {
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import path from 'path'
-import type { CollectionConfig } from 'payload/types'
+import { fileURLToPath } from 'url'
+
+import { anyone } from '../access/anyone'
+import { authenticated } from '../access/authenticated'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  upload: {
-    staticDir: path.resolve(__dirname, '../../../media'),
-  },
   access: {
-    read: () => true,
+    create: authenticated,
+    delete: authenticated,
+    read: anyone,
+    update: authenticated,
   },
   fields: [
     {
@@ -19,11 +31,15 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'richText',
-      editor: slateEditor({
-        admin: {
-          elements: ['link'],
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
     },
   ],
+  upload: {
+    // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
+    staticDir: path.resolve(dirname, '../../../public/media'),
+  },
 }

@@ -1,39 +1,44 @@
-import type { CollectionConfig } from 'payload/types'
+import type { CollectionConfig } from 'payload'
 
-import { admins } from '../../access/admins'
-import { Archive } from '../../blocks/ArchiveBlock'
-import { CallToAction } from '../../blocks/CallToAction'
+import { authenticated } from '../../access/authenticated'
+import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Content } from '../../blocks/Content'
-import { MediaBlock } from '../../blocks/MediaBlock'
+import { FormBlock } from '../../blocks/Form'
 import { slugField } from '../../fields/slug'
-import { populateArchiveBlock } from '../../hooks/populateArchiveBlock'
-import { adminsOrPublished } from './access/adminsOrPublished'
+import { populatePublishedAt } from '../../hooks/populatePublishedAt'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidatePage } from './hooks/revalidatePage'
-import { ProductsSlider } from '../../blocks/ProductsSlider'
 
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
+import { MediaBlock } from 'src/payload/blocks/MediaBlock'
+import { ProductsSlider } from 'src/payload/blocks/ProductsSlider'
 export const Pages: CollectionConfig = {
   slug: 'pages',
-  admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    preview: doc => {
-      return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/preview?url=${encodeURIComponent(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/${doc.slug !== 'home' ? doc.slug : ''}`,
-      )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
-    },
-  },
-  hooks: {
-    afterChange: [revalidatePage],
-    afterRead: [populateArchiveBlock],
-  },
-  versions: {
-    drafts: true,
-  },
   access: {
-    read: adminsOrPublished,
-    update: admins,
-    create: admins,
-    delete: admins,
+    create: authenticated,
+    delete: authenticated,
+    read: authenticatedOrPublished,
+    update: authenticated,
+  },
+  admin: {
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data }) => {
+        const path = generatePreviewPath({
+          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`,
+        })
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+      },
+    },
+    preview: (doc) =>
+      generatePreviewPath({ path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+    useAsTitle: 'title',
   },
   fields: [
     {
@@ -41,62 +46,68 @@ export const Pages: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    slugField(),
     {
       type: 'tabs',
       tabs: [
         {
-          label: 'Page Details',
           fields: [
             {
               name: 'layout',
               type: 'blocks',
+              blocks: [Content, FormBlock, MediaBlock, ProductsSlider],
               required: true,
-              blocks: [CallToAction, Content, MediaBlock, Archive, ProductsSlider],
-            },
-            {
-              name: 'publishedOn',
-              type: 'date',
-              admin: {
-                position: 'sidebar',
-                date: {
-                  pickerAppearance: 'dayAndTime',
-                },
-              },
-              hooks: {
-                beforeChange: [
-                  ({ siblingData, value }) => {
-                    if (siblingData._status === 'published' && !value) {
-                      return new Date()
-                    }
-                    return value
-                  },
-                ],
-              },
             },
           ],
+          label: 'Content',
         },
         {
+          name: 'meta',
           label: 'SEO',
           fields: [
-            {
-              name: 'seoTitle',
-              label: 'Title',
-              type: 'text',
-            },
-            {
-              name: 'seoDescription',
-              label: 'description',
-              type: 'textarea',
-            },
-            {
-              name: 'seoImageUrl',
-              label: 'Image Url',
-              type: 'text',
-            },
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: 'media',
+            }),
+
+            MetaDescriptionField({}),
+            PreviewField({
+              // if the `generateUrl` function is configured
+              hasGenerateFn: true,
+
+              // field paths to match the target field for data
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
           ],
         },
       ],
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    slugField(),
   ],
+  hooks: {
+    afterChange: [revalidatePage],
+    beforeChange: [populatePublishedAt],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }

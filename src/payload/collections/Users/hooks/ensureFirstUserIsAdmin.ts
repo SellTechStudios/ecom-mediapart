@@ -1,11 +1,10 @@
-import type { FieldHook } from 'payload/types'
-
-import type { User } from '../../../payload-types'
-
 // ensure the first user created is an admin
 // 1. lookup a single user on create as succinctly as possible
 // 2. if there are no users found, append `admin` to the roles array
 // access control is already handled by this fields `access` property
+
+import { FieldHook, User } from 'payload'
+
 // it ensures that only admins can create and update the `roles` field
 export const ensureFirstUserIsAdmin: FieldHook<User> = async ({ req, operation, value }) => {
   if (operation === 'create') {

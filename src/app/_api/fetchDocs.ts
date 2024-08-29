@@ -1,12 +1,12 @@
 import type { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
-import type { Config } from '../../payload/payload-types'
 import { CATEGORIES } from '../_graphql/categories'
 import { ORDERS } from '../_graphql/orders'
 import { PAGES } from '../_graphql/pages'
 import { PRODUCTS } from '../_graphql/products'
 import { GRAPHQL_API_URL } from './shared'
 import { payloadToken } from './token'
+import { Config } from 'src/payload-types'
 
 const queryMap = {
   pages: {
@@ -52,8 +52,8 @@ export const fetchDocs = async <T>(
       query: queryMap[collection].query,
     }),
   })
-    ?.then(res => res.json())
-    ?.then(res => {
+    ?.then((res) => res.json())
+    ?.then((res) => {
       if (res.errors) throw new Error(res?.errors?.[0]?.message ?? 'Error fetching docs')
 
       return res?.data?.[queryMap[collection].key]?.docs
