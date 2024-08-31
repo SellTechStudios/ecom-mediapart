@@ -1,10 +1,7 @@
 import { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 
 import LoginForm from './LoginForm'
 
-import classes from './index.module.scss'
 import { getMeUser } from '@/utilities/getMeUser'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
@@ -14,30 +11,13 @@ export default async function Login() {
   })
 
   return (
-    <section className={classes.login}>
-      <div className={classes.heroImg}>
-        <Link href="/">
-          <Image
-            src="/logo-black.svg"
-            alt="logo"
-            width={250}
-            height={23}
-            className={classes.logo}
-          />
-        </Link>
-      </div>
-
-      <div className={classes.formWrapper}>
-        <div className={classes.formContainer}>
-          <div className={classes.formTitle}>
-            <h3>Welcome</h3>
-            <Image src="/assets/icons/hand.png" alt="hand" width={30} height={30} />
-          </div>
-
-          <p>Please login here</p>
-
-          <LoginForm />
+    <section className="flex flex-col items-center justify-center bg-center sm:bg-none sm:p-4">
+      <div className="flex flex-col items-center justify-center w-full max-w-xl p-12 bg-white rounded-lg shadow-lg sm:bg-opacity-90 sm:backdrop-blur-sm sm:p-8">
+        <div className="flex items-center w-full gap-4 mb-4">
+          <h3 className="m-0 text-2xl sm:text-3xl">Welcome</h3>
         </div>
+
+        <LoginForm />
       </div>
     </section>
   )

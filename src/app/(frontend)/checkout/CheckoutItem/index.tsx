@@ -1,26 +1,53 @@
-import Link from 'next/link'
-
-import classes from './index.module.scss'
 import { Media } from '@/components/Media'
-
-export const CheckoutItem = ({ product, title, metaImage, quantity, index }) => {
+import Image from 'next/image'
+import Link from 'next/link'
+type CheckoutItemProps = {
+  product: any
+  title: string
+  metaImage: string
+  quantity: number
+  index: number
+}
+export const CheckoutItem = ({ product, title, metaImage, quantity, index }: CheckoutItemProps) => {
   return (
-    <li className={classes.item} key={index}>
-      <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
+    <li
+      className="grid grid-cols-[100px_5fr_1fr_1fr] py-4 gap-4 border-b border-gray-300 "
+      key={index}
+    >
+      <Link
+        href={`/products/${product.slug}`}
+        className="flex items-center relative min-h-[80px] bg-gray-300"
+      >
         {!metaImage && <span>No image</span>}
-        {metaImage && typeof metaImage !== 'string' && (
-          <Media className={classes.media} imgClassName={classes.image} resource={metaImage} fill />
+        {metaImage && typeof metaImage !== 'string' ? (
+          <Media
+            className="relative h-full"
+            imgClassName="object-contain max-w-full aspect-square"
+            resource={metaImage}
+            fill
+          />
+        ) : (
+          <Image
+            src={metaImage}
+            alt={product.alt ? product.alt : 'Product Image'}
+            width={100}
+            height={100}
+          />
         )}
       </Link>
 
-      <div className={classes.itemDetails}>
-        <div className={classes.titleWrapper}>
-          <h6>{title}</h6>
-        </div>
-        <p className={classes.quantity}>x{quantity}</p>
+      <div className="self-center truncate">{title}</div>
+
+      <div className="flex items-center justify-end text-lg text-center sm:text-base">
+        x{quantity}
       </div>
 
-      <div className={classes.subtotal}></div>
+      <div className="flex items-center justify-end">
+        {((product.price * quantity) / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        })}
+      </div>
     </li>
   )
 }

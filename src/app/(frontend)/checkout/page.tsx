@@ -1,10 +1,9 @@
 import { CheckoutPage } from './CheckoutPage'
 
-import classes from './index.module.scss'
 import { Container } from '@/components/Container'
-import { Settings } from 'src/payload-types'
-import { getMeUser } from '@/utilities/getMeUser'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getMeUser } from '@/utilities/getMeUser'
+import { Settings } from 'src/payload-types'
 
 export default async function Checkout() {
   await getMeUser({
@@ -16,7 +15,7 @@ export default async function Checkout() {
   let settings: Settings = await getCachedGlobal('settings')()
 
   return (
-    <div className={classes.checkout}>
+    <div className="w-full my-12 sm:mt-8">
       <Container>
         <CheckoutPage settings={settings} />
       </Container>

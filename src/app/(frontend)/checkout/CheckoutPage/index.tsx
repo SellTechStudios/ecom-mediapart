@@ -1,15 +1,14 @@
 'use client'
 
-import React, { Fragment, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import React, { Fragment, useEffect } from 'react'
 
 import { CheckoutItem } from '../CheckoutItem'
 
-import classes from './index.module.scss'
-import { Settings } from 'src/payload-types'
 import { useAuth } from '@/providers/Auth'
 import { useCart } from '@/providers/Cart'
+import { Settings } from 'src/payload-types'
 
 export const CheckoutPage: React.FC<{
   settings: Settings
@@ -31,7 +30,7 @@ export const CheckoutPage: React.FC<{
 
   return (
     <Fragment>
-      {cartIsEmpty && (
+      {cartIsEmpty ? (
         <div>
           {'Your '}
           <Link href="/cart">cart</Link>
@@ -43,16 +42,13 @@ export const CheckoutPage: React.FC<{
             </Fragment>
           )}
         </div>
-      )}
-      {!cartIsEmpty && (
-        <div className={classes.items}>
-          <div className={classes.header}>
+      ) : (
+        <div className="my-8">
+          <div className="hidden sm:grid grid-cols-[100px_5fr_1fr_1fr] gap-6 pb-2 border-b border-gray-300">
             <p>Products</p>
-            <div className={classes.headerItemDetails}>
-              <p></p>
-              <p className={classes.quantity}>Quantity</p>
-            </div>
-            <p className={classes.subtotal}>Subtotal</p>
+            <p></p>
+            <div className="text-right">Quantity</div>
+            <div className="text-right">Subtotal</div>
           </div>
 
           <ul>
@@ -69,20 +65,19 @@ export const CheckoutPage: React.FC<{
                 const metaImage = product.mediaImages[0].url
 
                 return (
-                  <Fragment key={index}>
-                    <CheckoutItem
-                      product={product}
-                      title={title}
-                      metaImage={metaImage}
-                      quantity={quantity}
-                      index={index}
-                    />
-                  </Fragment>
+                  <CheckoutItem
+                    key={index}
+                    product={product}
+                    title={title}
+                    metaImage={metaImage}
+                    quantity={quantity}
+                    index={index}
+                  />
                 )
               }
               return null
             })}
-            <div className={classes.orderTotal}>
+            <div className="flex justify-between px-6 py-6 font-semibold text-right bg-gray-300 mb-15">
               <p>Order Total</p>
               <p>{cartTotal.formatted}</p>
             </div>

@@ -1,16 +1,16 @@
 'use client'
 
+import { CartLink } from '@/components/CartLink'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { UserIcon } from '@heroicons/react/24/outline'
+import { useAuth } from '@payloadcms/ui/providers/Auth'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Header } from 'src/payload-types'
 import { Container } from '../../Container'
 import { CMSLink } from '../../Link'
-import { Header } from 'src/payload-types'
-import { useAuth } from '@payloadcms/ui/providers/Auth'
-import { CartLink } from '@/components/CartLink'
-import { useEffect, useState } from 'react'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import { usePathname } from 'next/navigation'
 
 const HeaderComponent = ({ header }: { header: Header }) => {
   const { user } = useAuth()

@@ -2,13 +2,12 @@ import { Metadata } from 'next'
 
 import { LogoutPage } from './LogoutPage'
 
-import classes from './index.module.scss'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { Container } from '@/components/Container'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export default async function Logout() {
   return (
-    <Container className={classes.logout}>
+    <Container className="mb-24 lg:mb-24 md:mb-15">
       <LogoutPage />
     </Container>
   )

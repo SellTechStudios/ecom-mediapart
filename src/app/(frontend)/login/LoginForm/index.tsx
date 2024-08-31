@@ -1,15 +1,14 @@
 'use client'
 
-import React, { useCallback, useRef } from 'react'
-import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useCallback, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 
-import classes from './index.module.scss'
-import { useAuth } from '@/providers/Auth'
+import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
-import { Button } from '@/components/Button'
+import { useAuth } from '@/providers/Auth'
 
 type FormData = {
   email: string
@@ -45,8 +44,11 @@ const LoginForm: React.FC = () => {
   )
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-      <Message error={error} className={classes.message} />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col items-start w-full gap-6 mt-8 mb-4"
+    >
+      <Message error={error} className="mb-4" />
       <Input
         name="email"
         label="Email Address"
@@ -68,10 +70,10 @@ const LoginForm: React.FC = () => {
         appearance="primary"
         label={isLoading ? 'Processing' : 'Login'}
         disabled={isLoading}
-        className={classes.submit}
+        className="w-full"
       />
-      <div className={classes.links}>
-        <Link href={`/create-account${allParams}`}>Create an account</Link>
+      <div className="flex items-center justify-between w-full">
+        <Link href="/create-account">Create an account</Link>
         <br />
         <Link href={`/recover-password${allParams}`}>Recover your password</Link>
       </div>
