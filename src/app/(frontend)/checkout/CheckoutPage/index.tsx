@@ -47,7 +47,7 @@ export const CheckoutPage: React.FC<{
           <div className="hidden sm:grid grid-cols-[100px_5fr_1fr_1fr] gap-6 pb-2 border-b border-gray-300">
             <p>Products</p>
             <p></p>
-            <div className="text-right">Quantity</div>
+            <div className="text-center">Quantity</div>
             <div className="text-right">Subtotal</div>
           </div>
 

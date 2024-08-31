@@ -1,14 +1,50 @@
 'use client'
 
+import { RemoveFromCartButton } from '@/components/RemoveFromCartButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import classes from './index.module.scss'
-import { RemoveFromCartButton } from '@/components/RemoveFromCartButton'
 
 const CartItem = ({ product, title, image, qty, addItemToCart }) => {
   const [quantity, setQuantity] = useState(qty)
 
+  return (
+    <li className="grid grid-cols-[100px_3fr_1fr_1fr_1fr] py-6 gap-6 border-b border-gray-300">
+      <Link href={`/products/${product.slug}`} className="relative h-full">
+        {!image && <span>No image</span>}
+        {image && typeof image !== 'string' && (
+          <Image
+            src={image.url}
+            alt={image.alt ? image.alt : 'Product Image'}
+            width={100}
+            height={100}
+            className="object-contain max-w-full aspect-square"
+          />
+        )}
+      </Link>
+
+      <div className="self-center truncate">{title}</div>
+      <QuantityButton
+        quantity={quantity}
+        setQuantity={setQuantity}
+        addItemToCart={addItemToCart}
+        product={product}
+      />
+
+      <div className="flex items-center justify-center">
+        {((product.price * quantity) / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        })}
+      </div>
+      <div className="flex self-center justify-center">
+        <RemoveFromCartButton product={product} />
+      </div>
+    </li>
+  )
+}
+
+const QuantityButton = ({ quantity, setQuantity, addItemToCart, product }) => {
   const decrementQty = () => {
     const updatedQty = quantity > 1 ? quantity - 1 : 1
 
@@ -29,55 +65,29 @@ const CartItem = ({ product, title, image, qty, addItemToCart }) => {
     setQuantity(updatedQty)
     addItemToCart({ product, quantity: Number(updatedQty) })
   }
-
   return (
-    <li className={classes.item} key={title}>
-      <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
-        {!image && <span>No image</span>}
-        {image && typeof image !== 'string' && (
-          // <Media className={classes.media} imgClassName={classes.image} resource={image} fill />
-          <Image
-            src={image.url}
-            alt={image.alt ? image.alt : 'Product Image'}
-            width={100}
-            height={100}
-          />
-        )}
-      </Link>
+    <div className="border border-gray-500 grid grid-cols-[45px_1fr_45px] rounded-lg items-center h-11 max-w-[120px] self-center ">
+      <button className="flex justify-center w-full h-full cursor-pointer" onClick={decrementQty}>
+        <Image
+          src="/assets/icons/minus.svg"
+          alt="minus"
+          width={24}
+          height={24}
+          className="m-auto"
+        />
+      </button>
 
-      <div className={classes.itemDetails}>
-        <div className={classes.titleWrapper}>
-          <h6>{title}</h6>
-        </div>
+      <input
+        type="text"
+        className="text-center h-full w-full min-w-[30px] border-none outline-none text-lg font-bold self-center"
+        value={quantity}
+        onChange={enterQty}
+      />
 
-        <div className={classes.quantity}>
-          <div className={classes.quantityBtn} onClick={decrementQty}>
-            <Image
-              src="/assets/icons/minus.svg"
-              alt="minus"
-              width={24}
-              height={24}
-              className={classes.qtnBt}
-            />
-          </div>
-
-          <input
-            type="text"
-            className={classes.quantityInput}
-            value={quantity}
-            onChange={enterQty}
-          />
-
-          <div className={classes.quantityBtn} onClick={incrementQty}>
-            <Image src="/assets/icons/plus.svg" alt="plus" width={24} height={24} />
-          </div>
-        </div>
-      </div>
-
-      <div className={classes.subtotalWrapper}>
-        <RemoveFromCartButton product={product} />
-      </div>
-    </li>
+      <button className="self-center w-full h-full cursor-pointer" onClick={incrementQty}>
+        <Image src="/assets/icons/plus.svg" alt="plus" width={24} height={24} className="m-auto" />
+      </button>
+    </div>
   )
 }
 

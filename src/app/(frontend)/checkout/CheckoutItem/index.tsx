@@ -38,7 +38,7 @@ export const CheckoutItem = ({ product, title, metaImage, quantity, index }: Che
 
       <div className="self-center truncate">{title}</div>
 
-      <div className="flex items-center justify-end text-lg text-center sm:text-base">
+      <div className="flex items-center justify-center text-lg text-center sm:text-base">
         x{quantity}
       </div>
 
