@@ -1,9 +1,9 @@
-import { PipelineStage } from 'mongoose'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import config from '@payload-config'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { PipelineStage } from 'mongoose'
 
 type ProductsListProps = {
-  listType: 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory' | 'quicksearch'
+  listType: 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory' | 'quicksearch' | 'all'
   searchString?: string
   categoryId?: string
 }
@@ -22,13 +22,23 @@ export const fetchProductsList = async ({
     promoted: promotedProductAggregate,
     quickSearch: quickSearchAggregate(searchString),
     incategory: inCategoryAggregate(categoryId),
+    all: allProductsAggregate(),
   }
 
   const products = await productsCollectionModel.aggregate(aggregatesMap[listType])
 
   return products
 }
-
+const allProductsAggregate = (): PipelineStage[] => [
+  {
+    $sort: {
+      name: 1,
+    },
+  },
+  {
+    $project: outputProject,
+  },
+]
 const outputProject = {
   isPromoted: { $cmp: ['$pricePrevious', '$price'] },
   name: 1,
