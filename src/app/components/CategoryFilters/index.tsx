@@ -1,16 +1,14 @@
 'use client'
 
-import React from 'react'
-
-import { ProductCategory } from 'src/payload-types'
 import { useFilter } from '@/providers/Filter'
+import { ProductCategory } from 'src/payload-types'
 
-import classes from './index.module.scss'
 import { Checkbox } from '@/components/Checkbox'
 import { HR } from '@/components/HR'
 import { RadioButton } from '@/components/Radio'
+import classes from './index.module.scss'
 
-const Filters = ({ categories }: { categories: ProductCategory[] }) => {
+export const CategoryFilters = ({ categories }: { categories: ProductCategory[] }) => {
   const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
 
   const handleCategories = (categoryId: string) => {
@@ -36,7 +34,7 @@ const Filters = ({ categories }: { categories: ProductCategory[] }) => {
             return (
               <Checkbox
                 key={category.id}
-                label={category.title}
+                label={category.name}
                 value={category.id}
                 isSelected={isSelected}
                 onClickHandler={handleCategories}
@@ -66,5 +64,3 @@ const Filters = ({ categories }: { categories: ProductCategory[] }) => {
     </div>
   )
 }
-
-export default Filters

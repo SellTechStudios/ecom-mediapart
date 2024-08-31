@@ -1,6 +1,6 @@
 import { Container } from '@/components/Container'
-import { ProductsList } from '../components/ProductList'
-import { fetchProductsList } from '../components/fetchProducts'
+import { ProductsList } from '@/components/ProductList/ProductList'
+import { fetchProductsList } from '@/components/ProductList/fetchProducts'
 
 export default async function SearchProductsPage({
   searchParams,

@@ -1,7 +1,7 @@
+import { CategoryNavigation } from '@/components/CategoryNavigation'
 import { Container } from '@/components/Container'
-import { CategoryNavigation } from '../../components/CategoryNavigation'
-import { ProductsList } from '../../components/ProductList'
-import { fetchProductsList } from '../../components/fetchProducts'
+import { ProductsList } from '@/components/ProductList/ProductList'
+import { fetchProductsList } from '@/components/ProductList/fetchProducts'
 import { fetchCategories } from './fetchCategories'
 
 // Force this page to be dynamic so that Next.js does not cache it

@@ -1,8 +1,8 @@
+import { CategoryNavigation } from '@/components/CategoryNavigation'
 import { Container } from '@/components/Container'
+import { fetchProductsList } from '@/components/ProductList/fetchProducts'
+import { ProductsList } from '@/components/ProductList/ProductList'
 import { fetchCategories } from './category/[id]/fetchCategories'
-import { CategoryNavigation } from './components/CategoryNavigation'
-import { ProductsList } from './components/ProductList'
-import { fetchProductsList } from './components/fetchProducts'
 
 export default async function ProductListPage() {
   const products = await fetchProductsList({ listType: 'all' })

@@ -1,7 +1,6 @@
-import Link from 'next/link'
-import { ProductCategory } from 'src/payload-types'
-import { CategoryItem } from '../category/[id]/fetchCategories'
 import { cn } from '@/utilities/cn'
+import Link from 'next/link'
+import { CategoryItem } from '../../(frontend)/products/category/[id]/fetchCategories'
 
 type CategoryNavigationProps = {
   categories: CategoryItem[]
