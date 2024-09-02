@@ -16,18 +16,6 @@ const Manufacturer: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'title',
-      type: 'text',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-    },
-    {
-      name: 'keywords',
-      type: 'text',
-    },
   ],
 }
 

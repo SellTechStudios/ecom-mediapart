@@ -476,9 +476,6 @@ export interface Manufacturer {
   id: string;
   erpId: string;
   name: string;
-  title?: string | null;
-  description?: string | null;
-  keywords?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -490,7 +487,6 @@ export interface Warehouse {
   id: string;
   erpId: string;
   name: string;
-  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }

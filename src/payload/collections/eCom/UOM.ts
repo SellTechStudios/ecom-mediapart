@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload'
 const UOMs: CollectionConfig = {
   slug: 'uom',
   admin: {
-    useAsTitle: 'Units of Measure',
+    useAsTitle: 'name',
   },
   fields: [
     {
