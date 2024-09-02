@@ -11,7 +11,6 @@ import {
   upsertProductBulk,
 } from './process'
 import Image from 'next/image'
-import { Butterfly_Kids } from 'next/font/google'
 
 const bulkSize = 10
 const parserOptions = {

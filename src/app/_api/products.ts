@@ -29,11 +29,9 @@ export const productFetchByErpId = async (erpId: string): Promise<Product> => {
             }
             manufacturer {
               name
-              title
             }
             warehouse {
               name
-              description
             }
             relatedProducts {
               id
@@ -79,11 +77,9 @@ export const productFetchBySlug = async (slug: string): Promise<Product> => {
             }
             manufacturer {
               name
-              title
             }
             warehouse {
               name
-              description
             }
             relatedProducts {
               id
