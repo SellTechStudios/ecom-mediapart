@@ -1,6 +1,6 @@
 'use client'
 
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -66,7 +66,6 @@ export const CartProvider = (props) => {
   useEffect(() => {
     if (!hasInitialized.current) {
       hasInitialized.current = true
-
       const syncCartFromLocalStorage = async () => {
         const localCart = localStorage.getItem('cart')
 

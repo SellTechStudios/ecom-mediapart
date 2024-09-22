@@ -1,9 +1,11 @@
+import { GRAPHQL_API_URL } from '@/_api/shared'
+
 type baseEntity = {
   id: string
 }
 
 const BuildRequest = async (queryObject: object): Promise<any> => {
-  const response = await fetch(`http://localhost:3000/api/graphql`, {
+  const response = await fetch(`${GRAPHQL_API_URL}/api/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
