@@ -1,8 +1,8 @@
-import { MediaBlock } from '@/blocks/MediaBlock'
+import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from 'src/app/components/Link'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 
+import type { Page } from '../../../payload-types'
 import {
   IS_BOLD,
   IS_CODE,
@@ -12,7 +12,6 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from './nodeFormat'
-import type { Page } from '../../../payload-types'
 
 export type NodeTypes =
   | DefaultNodeTypes

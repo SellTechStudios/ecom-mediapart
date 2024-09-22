@@ -1,4 +1,4 @@
-import { ARCHIVE_BLOCK, CALL_TO_ACTION, CONTENT, MEDIA_BLOCK } from './blocks'
+import { ARCHIVE_BLOCK, CONTENT, MEDIA_BLOCK } from './blocks'
 import { PRODUCT_CATEGORIES } from './categories'
 import { META } from './meta'
 
@@ -19,13 +19,7 @@ export const PRODUCT = `
         id
         title
         ${PRODUCT_CATEGORIES}
-        layout {
-          ${CALL_TO_ACTION}
-          ${CONTENT}
-          ${MEDIA_BLOCK}
-          ${ARCHIVE_BLOCK}
-        }
-        enablePaywall
+        # enablePaywall
         relatedProducts {
           id
           slug
@@ -37,13 +31,20 @@ export const PRODUCT = `
     }
   }
 `
+//removed the following:
+// # layout {
+//   #  ${CALL_TO_ACTION}
+//   #  ${CONTENT}
+//   #  ${MEDIA_BLOCK}
+//   #  ${ARCHIVE_BLOCK}
+//   # }
+// from the docs object of query above
 
 export const PRODUCT_PAYWALL = `
   query Product($slug: String, $draft: Boolean) {
     Products(where: { slug: { equals: $slug}}, limit: 1, draft: $draft) {
       docs {
         paywall {
-          ${CALL_TO_ACTION}
           ${CONTENT}
           ${MEDIA_BLOCK}
           ${ARCHIVE_BLOCK}
@@ -52,3 +53,6 @@ export const PRODUCT_PAYWALL = `
     }
   }
 `
+//removed the following:
+//${CALL_TO_ACTION}
+//from the paywall object of the query above

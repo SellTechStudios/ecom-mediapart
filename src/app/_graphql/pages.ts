@@ -1,10 +1,4 @@
-import {
-  ARCHIVE_BLOCK,
-  CALL_TO_ACTION,
-  CONTENT,
-  MEDIA_BLOCK,
-  PRODUCTS_SLIDER_BLOCK,
-} from './blocks'
+import { ARCHIVE_BLOCK, CONTENT, MEDIA_BLOCK, PRODUCTS_SLIDER_BLOCK } from './blocks'
 
 export const PAGES = `
   query Pages {
@@ -22,14 +16,16 @@ export const PAGE = `
       docs {
         id
         title
-        layout {
-          ${CONTENT}
-          ${CALL_TO_ACTION}
-          ${MEDIA_BLOCK}
-          ${ARCHIVE_BLOCK}
-          ${PRODUCTS_SLIDER_BLOCK}
-        }
+        # layout {
+        #  ${CONTENT}
+        #  ${MEDIA_BLOCK}
+        #  ${ARCHIVE_BLOCK}
+        #  ${PRODUCTS_SLIDER_BLOCK}
+        # }
       }
     }
   }
 `
+//removed the following:
+//${CALL_TO_ACTION}
+//from the layout object of the query above

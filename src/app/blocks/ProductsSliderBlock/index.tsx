@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
+import { Page, Product } from 'src/payload-types'
 import { Autoplay, FreeMode, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { productsBestsellers, productsLatest } from '../../_api/products'
 import { ProductSliderItem } from './ProductSliderItem'
-import { Page, Product } from 'src/payload-types'
 
 type Props = Extract<Page['layout'][0], { blockType: 'productsSlider' }>
 

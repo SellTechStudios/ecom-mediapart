@@ -1,5 +1,5 @@
-export const PRODUCT_CATEGORIES = `categories {
-  title
+export const PRODUCT_CATEGORIES = `erpCategories {
+  # title
   id
 }`
 
