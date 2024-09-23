@@ -1,7 +1,7 @@
-import { CategoryNavigation } from '@/components/CategoryNavigation'
+import { CategoryNavigation } from '@/(frontend)/products/_components/ProductList/category-navigation'
 import { Container } from '@/components/Container'
-import { fetchProductsList } from '@/components/ProductList/fetchProducts'
-import { ProductsList } from '@/components/ProductList/ProductList'
+import { fetchProductsList } from '@/(frontend)/products/_components/ProductList/fetchProducts'
+import { ProductsList } from '@/(frontend)/products/_components/ProductList/ProductList'
 import { fetchCategories } from '../category/[id]/fetchCategories'
 
 export default async function PromotedProductsPage() {

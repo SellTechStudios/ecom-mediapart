@@ -1,6 +1,6 @@
 import { cn } from '@/utilities/cn'
 import Link from 'next/link'
-import { CategoryItem } from '../../(frontend)/products/category/[id]/fetchCategories'
+import { CategoryItem } from '../../../category/[id]/fetchCategories'
 
 type CategoryNavigationProps = {
   categories: CategoryItem[]

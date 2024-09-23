@@ -3,6 +3,7 @@ import { admins } from '../../../access/admins'
 import { slugField } from '../../../fields/slug'
 import { deleteProductFromCarts } from './hooks/deleteProductFromCarts'
 import { revalidateProduct } from './hooks/revalidateProduct'
+import { searchCategoriesHandler, searchProductsHandler } from '@/_api/product-list'
 
 const Products: CollectionConfig = {
   slug: 'products',
@@ -15,6 +16,18 @@ const Products: CollectionConfig = {
       )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
     },
   },
+  endpoints: [
+    {
+      path: '/search',
+      method: 'get',
+      handler: searchProductsHandler,
+    },
+    {
+      path: '/categories',
+      method: 'get',
+      handler: searchCategoriesHandler,
+    },
+  ],
   hooks: {
     // beforeChange: [beforeProductChange],
     afterChange: [revalidateProduct],

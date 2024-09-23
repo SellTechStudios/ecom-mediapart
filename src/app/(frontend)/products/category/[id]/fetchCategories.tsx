@@ -1,13 +1,11 @@
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import config from '@payload-config'
+import { Payload } from 'payload'
 
 export type CategoryItem = {
   name: string
   _id: string
 }
 
-export const fetchCategories = async () => {
-  const payload = await getPayloadHMR({ config })
+export const fetchCategories = async (payload: Payload) => {
   var collectionModel = payload.db.collections['product-category']
 
   const categories = await collectionModel.aggregate([

@@ -1,8 +1,9 @@
+'use server'
 import config from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { PipelineStage } from 'mongoose'
 
-type ProductsListProps = {
+export type ProductsListProps = {
   listType: 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory' | 'quicksearch' | 'all'
   searchString?: string
   categoryId?: string

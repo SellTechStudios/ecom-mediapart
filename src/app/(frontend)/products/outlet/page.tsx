@@ -1,7 +1,7 @@
-import { CategoryNavigation } from '@/components/CategoryNavigation'
+import { CategoryNavigation } from '@/(frontend)/products/_components/ProductList/categoryNavigation'
 import { Container } from '@/components/Container'
-import { fetchProductsList } from '../../../components/ProductList/fetchProducts'
-import { ProductsList } from '../../../components/ProductList/ProductList'
+import { fetchProductsList } from '../_components/ProductList/fetchProducts'
+import { ProductsList } from '../_components/ProductList/product-list'
 import { fetchCategories } from '../category/[id]/fetchCategories'
 
 export default async function OutletProductsPage() {
