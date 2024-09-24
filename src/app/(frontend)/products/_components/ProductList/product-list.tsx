@@ -5,13 +5,16 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { CategoryNavigation } from './category-navigation'
 import { FacetCheckbox, FacetRanges } from './facets'
+import { FacetRange } from './facets/facet-ranges'
 
 export const ProductsList = () => {
   const [categories, setCategories] = useState<any>([])
-  const [filters, setFilters] = useState<any>({ manufacturers: [], price: [] })
-  const [products, setProducts] = useState<any>([])
+  const [filterChecks, setFilterChecks] = useState<any>({ manufacturerId: [] })
+  const [filterRanges, setFilterRanges] = useState<any>({ price: [] })
   const [facets, setFacets] = useState<any>({})
+  const [products, setProducts] = useState<any>([])
 
+  //initial category list load
   useEffect(() => {
     const fetchCategoriesEffect = async () => {
       const response = await fetch('http://localhost:3000/api/products/categories')
@@ -23,10 +26,16 @@ export const ProductsList = () => {
     fetchCategoriesEffect()
   }, [])
 
+  //reload producs on filter changes
   useEffect(() => {
     const fetchProductsEffect = async () => {
-      // const queryParams = new URLSearchParams(filters).toString()
-      const response = await fetch('http://localhost:3000/api/products/search')
+      const response = await fetch('http://localhost:3000/api/products/search', {
+        method: 'POST',
+        body: JSON.stringify({
+          filterChecks,
+          filterRanges,
+        }),
+      })
       const json = await response.json()
 
       setProducts(json.documents)
@@ -34,10 +43,18 @@ export const ProductsList = () => {
     }
 
     fetchProductsEffect()
-  }, [filters])
+  }, [filterChecks, filterRanges])
 
-  const onFilterChange = (prop: string, newValues: string[]) => {
-    setFilters((prevState) => ({
+  //handle different facet type changes
+  const onFilterChecksChange = (prop: string, newValues: string[]) => {
+    setFilterChecks((prevState) => ({
+      ...prevState,
+      [prop]: newValues,
+    }))
+  }
+
+  const onFilterRangesChange = (prop: string, newValues: FacetRange[]) => {
+    setFilterRanges((prevState) => ({
       ...prevState,
       [prop]: newValues,
     }))
@@ -49,18 +66,16 @@ export const ProductsList = () => {
         <FacetCheckbox
           groupName="Producent"
           groupValues={facets.manufacturer}
-          onChange={(e) => onFilterChange('manufacturers', e)}
+          onChange={(e) => onFilterChecksChange('manufacturerId', e)}
         />
         <FacetRanges
           groupName="Cena"
           groupValues={facets.price}
-          onChange={(e) => onFilterChange('price', e)}
+          onChange={(e) => onFilterRangesChange('price', e)}
         />
         <CategoryNavigation categories={categories} />
-        {/* <Facets facets={facets} onFilterChange={setFilters} /> */}
       </div>
       <div className="col-span-3">
-        <pre>{JSON.stringify(filters)}</pre>
         {products.map((p, index) => (
           <Link key={index} href={`/products/${p.slug}`}>
             <Image

@@ -1,31 +1,49 @@
 'use client'
+import { SelectValue } from '@/components/ui/select'
 import { ChangeEvent, useEffect, useState } from 'react'
 
 type FacetProps = {
   groupName: string
   groupValues: any[]
-  onChange: (e: string[]) => void
+  onChange: (e: FacetRange[]) => void
+}
+
+export type FacetRange = {
+  id: string
+  lowerBound: number
+  upperBound: number
 }
 
 export default function FacetRanges(props: FacetProps) {
   const { groupName, groupValues, onChange } = props
-  const [selectedValues, setSelectedValues] = useState<string[]>([])
+  const [selectedRanges, setSelectedRanges] = useState<FacetRange[]>([])
 
   //track local state
-  const onCheckChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onCheckChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    lowerBound: number,
+    upperBound: number,
+  ) => {
     const { value, checked } = e.target
 
     if (checked) {
-      setSelectedValues((prevSelectedValues) => [...prevSelectedValues, value])
+      setSelectedRanges((prevSelectedValues) => [
+        ...prevSelectedValues,
+        {
+          id: value,
+          lowerBound,
+          upperBound,
+        },
+      ])
     } else {
-      setSelectedValues((prevSelectedValues) => prevSelectedValues.filter((v) => v !== value))
+      setSelectedRanges((prevSelectedValues) => prevSelectedValues.filter((v) => v.id !== value))
     }
   }
 
   //notify parent about change
   useEffect(() => {
-    onChange(selectedValues)
-  }, [selectedValues])
+    onChange(selectedRanges)
+  }, [selectedRanges])
 
   return (
     <div>
@@ -35,7 +53,11 @@ export default function FacetRanges(props: FacetProps) {
           groupValues.map((facet, _i) => (
             <li key={_i}>
               <label>
-                <input type="checkbox" value={facet.id} onChange={onCheckChange} />
+                <input
+                  type="checkbox"
+                  value={facet._id}
+                  onChange={(e) => onCheckChange(e, facet.lowerBound, facet.upperBound)}
+                />
                 {facet.lowerBound} - {facet.upperBound} ({facet.count})
               </label>
             </li>

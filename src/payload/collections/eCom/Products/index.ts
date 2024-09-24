@@ -19,7 +19,7 @@ const Products: CollectionConfig = {
   endpoints: [
     {
       path: '/search',
-      method: 'get',
+      method: 'post',
       handler: searchProductsHandler,
     },
     {

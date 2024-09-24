@@ -1,5 +1,7 @@
+import ObjectID from 'bson-objectid'
 import { PipelineStage } from 'mongoose'
 import { Payload } from 'payload'
+import { FacetRange } from './facets/facet-ranges'
 
 type ProductItem = {
   isPromoted: boolean
@@ -19,16 +21,28 @@ type ProductsListProps = {
 
 const PRICE_BOUNDS = [0, 50, 100, 150, 200, 500]
 
-const BuildProductsQuery = async (payload: Payload) => {
+const BuildProductsQuery = async (payload: Payload, filters: any) => {
   var model = payload.db.collections['products']
 
   // Build the match object for filters
   let matchQuery = {}
 
-  //   matchQuery['erpCategories'] = 1
-  // matchQuery['price'] = { $gte: 1, $lte: 20 }
+  //apply value filters
+  for (const [key, value] of Object.entries(filters.filterChecks) as [string, string[]][]) {
+    value?.forEach((v) => {
+      matchQuery[key] = { $eq: ObjectID(v) }
+    })
+  }
+
+  // //apply range filters match
+  for (const [key, value] of Object.entries(filters.filterRanges) as [string, FacetRange[]][]) {
+    value?.forEach((v) => {
+      matchQuery[key] = { $gte: v.lowerBound, $lte: v.upperBound }
+    })
+  }
 
   const aggregate = productAggregate(matchQuery)
+
   const result = await model.aggregate(aggregate)
   return result[0] as unknown as ProductsListProps
 }
@@ -65,14 +79,14 @@ const projectProduct: PipelineStage = {
 }
 
 let productAggregate = (matchQuery): PipelineStage[] => [
-  //apply input query
-  { $match: matchQuery },
-  { $limit: 5 },
-
   ...joinWithManufacturers,
 
   //narrow down product fields
   projectProduct,
+
+  //apply input query
+  { $match: matchQuery },
+  { $limit: 5 },
 
   //apply facets
   {
@@ -116,7 +130,7 @@ let productAggregate = (matchQuery): PipelineStage[] => [
         },
         {
           $project: {
-            _id: 0,
+            _id: 1,
             count: 1,
             lowerBound: {
               $cond: [{ $eq: ['$_id', 'Other'] }, null, '$_id'],

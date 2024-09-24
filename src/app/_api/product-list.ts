@@ -6,7 +6,8 @@ const searchProductsHandler: PayloadHandler = async (req): Promise<Response> => 
   const { payload } = req
 
   try {
-    const products = await BuildProductsQuery(payload)
+    const filters = await req.json()
+    const products = await BuildProductsQuery(payload, filters)
 
     return Response.json(products)
   } catch (error: unknown) {
