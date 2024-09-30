@@ -5,9 +5,20 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { CategoryNavigation } from './category-navigation'
 import { FacetCheckbox, FacetRanges } from './facets'
-import { FacetRange } from './facets/facet-ranges'
+import { type FacetRange } from './facets/facet-ranges'
+import { inCategoryMatch, outletMatch, promotedMatch } from './queryAggregates/match'
+import { quickSearch } from './queryAggregates/search'
+import { newProductsSort } from './queryAggregates/sort'
 
-export const ProductsList = () => {
+export type ProductsListProps = {
+  listType: 'all' | 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory'
+  searchString?: string
+  categoryId?: string
+}
+
+export const ProductsList = (props: ProductsListProps) => {
+  const { listType, searchString, categoryId } = props
+
   const [categories, setCategories] = useState<any>([])
   const [filterChecks, setFilterChecks] = useState<any>({ manufacturerId: [] })
   const [filterRanges, setFilterRanges] = useState<any>({ price: [] })
@@ -17,7 +28,7 @@ export const ProductsList = () => {
   //initial category list load
   useEffect(() => {
     const fetchCategoriesEffect = async () => {
-      const response = await fetch('http://localhost:3000/api/products/categories')
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/categories`)
       const json = await response.json()
 
       setCategories(json)
@@ -29,11 +40,36 @@ export const ProductsList = () => {
   //reload producs on filter changes
   useEffect(() => {
     const fetchProductsEffect = async () => {
-      const response = await fetch('http://localhost:3000/api/products/search', {
+      let match = {}
+      let search = {}
+      let sort = {}
+
+      switch (listType) {
+        case 'incategory':
+          //match = inCategoryMatch(props.categoryId)
+          break
+        case 'outlet':
+          match = outletMatch()
+          break
+        case 'promoted':
+          match = promotedMatch()
+          break
+        case 'new':
+          sort = newProductsSort()
+          break
+        case 'quicksearch':
+          search = quickSearch(props.searchString)
+          break
+      }
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/search`, {
         method: 'POST',
         body: JSON.stringify({
           filterChecks,
           filterRanges,
+          match,
+          search,
+          sort,
         }),
       })
       const json = await response.json()
@@ -63,6 +99,10 @@ export const ProductsList = () => {
   return (
     <Container className="grid grid-cols-4">
       <div>
+        {/* categories */}
+        <CategoryNavigation categories={categories} />
+
+        {/* facets */}
         <FacetCheckbox
           groupName="Producent"
           groupValues={facets.manufacturer}
@@ -73,7 +113,6 @@ export const ProductsList = () => {
           groupValues={facets.price}
           onChange={(e) => onFilterRangesChange('price', e)}
         />
-        <CategoryNavigation categories={categories} />
       </div>
       <div className="col-span-3">
         {products.map((p, index) => (

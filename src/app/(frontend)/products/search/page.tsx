@@ -1,6 +1,4 @@
-import { Container } from '@/components/Container'
-import { ProductsList } from '@/(frontend)/products/_components/ProductList/ProductList'
-import { fetchProductsList } from '@/(frontend)/products/_components/ProductList/fetchProducts'
+import { ProductsList } from '../_components/ProductList/product-list'
 
 export default async function SearchProductsPage({
   searchParams,
@@ -8,10 +6,5 @@ export default async function SearchProductsPage({
   searchParams?: { [key: string]: string | undefined }
 }) {
   const q = searchParams?.text || ''
-  const products = await fetchProductsList({ listType: 'quicksearch', searchString: q })
-  return (
-    <Container>
-      <ProductsList products={products} />
-    </Container>
-  )
+  return <ProductsList listType="quicksearch" searchString={q} />
 }

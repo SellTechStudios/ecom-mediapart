@@ -5,7 +5,7 @@ export type CategoryItem = {
   _id: string
 }
 
-export const fetchCategories = async (payload: Payload) => {
+const fetchCategories = async (payload: Payload) => {
   var collectionModel = payload.db.collections['product-category']
 
   const categories = await collectionModel.aggregate([
@@ -18,3 +18,5 @@ export const fetchCategories = async (payload: Payload) => {
 
   return categories
 }
+
+export default fetchCategories

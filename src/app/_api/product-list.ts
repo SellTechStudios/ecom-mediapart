@@ -1,13 +1,15 @@
-import BuildProductsQuery from '@/(frontend)/products/_components/ProductList/aggregateBuilder'
-import { fetchCategories } from '@/(frontend)/products/category/[id]/fetchCategories'
-import { PayloadHandler } from 'payload'
+import {
+  fetchCategories,
+  fetchProducts,
+} from '@/(frontend)/products/_components/ProductList/queries'
+import { type PayloadHandler } from 'payload'
 
 const searchProductsHandler: PayloadHandler = async (req): Promise<Response> => {
   const { payload } = req
 
   try {
     const filters = await req.json()
-    const products = await BuildProductsQuery(payload, filters)
+    const products = await fetchProducts(payload, filters)
 
     return Response.json(products)
   } catch (error: unknown) {
