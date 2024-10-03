@@ -45,22 +45,22 @@ const fetchProducts = async (payload: Payload, filters: any) => {
 
   //apply filters dependent on the list type that we get in request body
   matchQuery = Object.assign(matchQuery, filters.match)
-  console.log(matchQuery)
-
   const aggregate = productAggregate(matchQuery)
+
+  console.log(aggregate)
 
   const result = await model.aggregate(aggregate)
   return result[0] as unknown as ProductsListProps
 }
 
 let productAggregate = (matchQuery): PipelineStage[] => [
+  //apply input query
+  { $match: matchQuery },
+
   ...stages.join.joinWithManufacturers,
 
   //narrow down product fields
   stages.project.toProductSearchItem,
-
-  //apply input query
-  { $match: matchQuery },
 
   //apply facets
   {

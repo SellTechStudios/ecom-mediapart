@@ -1,11 +1,16 @@
 import { PipelineStage } from 'mongoose'
 
 export const joinWithManufacturers: PipelineStage[] = [
+  //join with manufacturer
   {
-    //join with manufacturer
+    $addFields: {
+      manufacturerId: { $toObjectId: '$manufacturer' },
+    },
+  },
+  {
     $lookup: {
       from: 'manufacturers',
-      localField: 'manufacturer',
+      localField: 'manufacturerId',
       foreignField: '_id',
       as: 'manufacturer',
     },

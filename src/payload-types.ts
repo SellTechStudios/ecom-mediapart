@@ -428,6 +428,7 @@ export interface Product {
   seoDescription?: string | null;
   seoImageUrl?: string | null;
   erpCategories?: (string | ProductErpCategory)[] | null;
+  Category?: (string | null) | ProductCategory;
   manufacturer?: (string | null) | Manufacturer;
   warehouse?: (string | null) | Warehouse;
   slug?: string | null;

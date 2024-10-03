@@ -46,7 +46,7 @@ export const ProductsList = (props: ProductsListProps) => {
 
       switch (listType) {
         case 'incategory':
-          //match = inCategoryMatch(props.categoryId)
+          match = inCategoryMatch(categoryId)
           break
         case 'outlet':
           match = outletMatch()
@@ -58,7 +58,7 @@ export const ProductsList = (props: ProductsListProps) => {
           sort = newProductsSort()
           break
         case 'quicksearch':
-          search = quickSearch(props.searchString)
+          search = quickSearch(searchString)
           break
       }
 

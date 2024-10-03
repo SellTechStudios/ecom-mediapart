@@ -199,6 +199,16 @@ const Products: CollectionConfig = {
       },
     },
     {
+      label: 'Category',
+      name: 'Category',
+      type: 'relationship',
+      relationTo: 'product-category',
+      hasMany: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'manufacturer',
       type: 'relationship',
       relationTo: 'manufacturer',

@@ -1,3 +1,9 @@
+'use client'
 import { ProductsList } from '../../_components/ProductList/product-list'
+import { useParams } from 'next/navigation'
 
-export default () => <ProductsList listType="incategory" categoryId="66cd0fb72581766ad153d7e5" />
+export default () => {
+  const params = useParams<{ id: string }>()
+
+  return <ProductsList listType="incategory" categoryId={params.id} />
+}
