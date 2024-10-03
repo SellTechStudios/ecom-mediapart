@@ -2,6 +2,7 @@ import { PipelineStage } from 'mongoose'
 
 export const toProductSearchItem: PipelineStage = {
   $project: {
+    id: '$_id',
     isPromoted: {
       $gt: ['$pricePrevious', '$price'],
     },

@@ -47,8 +47,6 @@ const fetchProducts = async (payload: Payload, filters: any) => {
   matchQuery = Object.assign(matchQuery, filters.match)
   const aggregate = productAggregate(matchQuery)
 
-  console.log(aggregate)
-
   const result = await model.aggregate(aggregate)
   return result[0] as unknown as ProductsListProps
 }

@@ -2,13 +2,15 @@
 import { Container } from '@/components/Container'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { CategoryNavigation } from './category-navigation'
 import { FacetCheckbox, FacetRanges } from './facets'
 import { type FacetRange } from './facets/facet-ranges'
 import { inCategoryMatch, outletMatch, promotedMatch } from './queryAggregates/match'
 import { quickSearch } from './queryAggregates/search'
 import { newProductsSort } from './queryAggregates/sort'
+import { ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { useCart } from '@/providers/Cart'
 
 export type ProductsListProps = {
   listType: 'all' | 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory'
@@ -24,6 +26,8 @@ export const ProductsList = (props: ProductsListProps) => {
   const [filterRanges, setFilterRanges] = useState<any>({ price: [] })
   const [facets, setFacets] = useState<any>({})
   const [products, setProducts] = useState<any>([])
+
+  const { addItemToCart, cart } = useCart()
 
   //initial category list load
   useEffect(() => {
@@ -115,20 +119,36 @@ export const ProductsList = (props: ProductsListProps) => {
         />
       </div>
       <div className="col-span-3">
-        {products.map((p, index) => (
-          <Link key={index} href={`/products/${p.slug}`}>
-            <Image
-              className="w-auto"
-              src={p.mediaImages[0].url}
-              width={50}
-              height={50}
-              alt="Product Image"
-              priority
-            />
-            <p className="text-sm leading-4 font-light">{p.name}</p>
-            <p className="mt-2 font-bold">{p.price} PLN</p>
-          </Link>
-        ))}
+        <div className="grid grid-cols-5 gap-8">
+          {products.map((p, index) => (
+            <div key={index}>
+              <Link href={`/products/${p.slug}`}>
+                <div>
+                  <Image
+                    src={p.mediaImages[0].url}
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    className="w-full h-auto mb-2"
+                    alt="Product Image"
+                    priority
+                  />
+                </div>
+                <p className="text-sm leading-4 font-light">{p.name}</p>
+              </Link>
+              <div className="flex flex-row justify-between align-middle mt-4">
+                <p className="mt-2 font-bold">{p.price} PLN</p>
+
+                <button
+                  onClick={() => addItemToCart({ product: p, quantity: 1 })}
+                  className="flex items-center justify-center w-8 h-8 text-white bg-gray-500 rounded-sm shadow-lg cursor-pointer"
+                >
+                  <ShoppingCartIcon className="size-5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </Container>
   )
