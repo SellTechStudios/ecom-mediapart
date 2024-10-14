@@ -67,7 +67,7 @@ const LoginForm: React.FC = () => {
       />
       <Button
         type="submit"
-        appearance="primary"
+        variant="primary"
         label={isLoading ? 'Processing' : 'Login'}
         disabled={isLoading}
         className="w-full"
