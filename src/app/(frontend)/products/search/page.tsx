@@ -1,4 +1,4 @@
-import { ProductsList } from '../_components/ProductList/product-list'
+import { ProductsList } from '@/components/ProductList'
 
 export default async function SearchProductsPage({
   searchParams,

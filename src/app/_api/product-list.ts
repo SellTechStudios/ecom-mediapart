@@ -1,7 +1,4 @@
-import {
-  fetchCategories,
-  fetchProducts,
-} from '@/(frontend)/products/_components/ProductList/queries'
+import { fetchCategories, fetchProducts } from '@/components/ProductList/queries'
 import { type PayloadHandler } from 'payload'
 
 const searchProductsHandler: PayloadHandler = async (req): Promise<Response> => {
@@ -33,4 +30,4 @@ const searchCategoriesHandler: PayloadHandler = async (req): Promise<Response> =
   }
 }
 
-export { searchProductsHandler, searchCategoriesHandler }
+export { searchCategoriesHandler, searchProductsHandler }

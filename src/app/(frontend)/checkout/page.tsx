@@ -1,4 +1,4 @@
-import { CheckoutPage } from './CheckoutPage'
+import { CheckoutPage } from '@/components/CheckoutPage'
 
 import { Container } from '@/components/Container'
 import { getCachedGlobal } from '@/utilities/getGlobals'

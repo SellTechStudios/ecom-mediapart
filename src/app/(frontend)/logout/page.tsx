@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import { LogoutPage } from './LogoutPage'
+import { LogoutPage } from '@/components/LogoutPage'
 
 import { Container } from '@/components/Container'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
