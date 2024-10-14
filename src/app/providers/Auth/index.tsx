@@ -1,26 +1,25 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { User } from 'src/payload-types'
 
-// eslint-disable-next-line no-unused-vars
 type ResetPassword = (args: {
   password: string
   passwordConfirm: string
   token: string
 }) => Promise<void>
 
-type ForgotPassword = (args: { email: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type ForgotPassword = (args: { email: string }) => Promise<void>
 
-type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void>
 
-type Login = (args: { email: string; password: string }) => Promise<User> // eslint-disable-line no-unused-vars
+type Login = (args: { email: string; password: string }) => Promise<User>
 
 type Logout = () => Promise<void>
 
 type AuthContext = {
   user?: User | null
-  setUser: (user: User | null) => void // eslint-disable-line no-unused-vars
+  setUser: (user: User | null) => void
   logout: Logout
   login: Login
   create: Create
@@ -124,7 +123,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             'Content-Type': 'application/json',
           },
         })
-
         if (res.ok) {
           const { user: meUser } = await res.json()
           setUser(meUser || null)
@@ -194,24 +192,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [])
 
-  return (
-    <Context.Provider
-      value={{
-        user,
-        setUser,
-        login,
-        logout,
-        create,
-        resetPassword,
-        forgotPassword,
-        status,
-      }}
-    >
-      {children}
-    </Context.Provider>
+  const values = useMemo(
+    () => ({
+      user,
+      setUser,
+      logout,
+      login,
+      create,
+      resetPassword,
+      forgotPassword,
+      status,
+    }),
+    [user, logout, login, create, resetPassword, forgotPassword, status],
   )
+  return <Context.Provider value={values}>{children}</Context.Provider>
 }
 
-type UseAuth<T = User> = () => AuthContext // eslint-disable-line no-unused-vars
+type UseAuth = () => AuthContext
 
 export const useAuth: UseAuth = () => useContext(Context)
