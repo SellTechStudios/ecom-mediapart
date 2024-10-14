@@ -32,10 +32,10 @@ const CartItem = ({ product, title, image, qty, addItemToCart }) => {
       />
 
       <div className="flex items-center justify-center">
-        {((product.price * quantity) / 100).toLocaleString('en-US', {
+        {new Intl.NumberFormat('pl-PL', {
           style: 'currency',
-          currency: 'USD',
-        })}
+          currency: 'PLN',
+        }).format(product.price * quantity)}
       </div>
       <div className="flex self-center justify-center">
         <RemoveFromCartButton product={product} />

@@ -43,10 +43,10 @@ export const CheckoutItem = ({ product, title, metaImage, quantity, index }: Che
       </div>
 
       <div className="flex items-center justify-end">
-        {((product.price * quantity) / 100).toLocaleString('en-US', {
+        {new Intl.NumberFormat('pl-PL', {
           style: 'currency',
-          currency: 'USD',
-        })}
+          currency: 'PLN',
+        }).format(product.price * quantity)}
       </div>
     </li>
   )

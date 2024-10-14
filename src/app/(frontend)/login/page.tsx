@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import LoginForm from './LoginForm'
+import LoginForm from '@/components/LoginForm'
 
 import { getMeUser } from '@/utilities/getMeUser'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'

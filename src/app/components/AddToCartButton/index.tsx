@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-import { Button, Props } from '../Button'
+import { Button, Props } from '@/components/Button'
 
-import classes from './index.module.scss'
-import { Product } from 'src/payload-types'
 import { useCart } from '@/providers/Cart'
+import { cn } from '@/utilities/cn'
+import { Product } from 'src/payload-types'
 
 export const AddToCartButton: React.FC<{
   product: Product
@@ -33,14 +33,12 @@ export const AddToCartButton: React.FC<{
       label={isInCart ? `✓ View in cart` : `Add to cart`}
       el={isInCart ? 'link' : undefined}
       appearance={appearance}
-      className={[
+      className={cn(
         className,
-        classes.addToCartButton,
-        appearance === 'default' && isInCart && classes.green,
-        !hasInitializedCart && classes.hidden,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+        'transition-opacity duration-100',
+        appearance === 'default' && isInCart && 'text-green-600',
+        !hasInitializedCart && 'opacity-0 invisible',
+      )}
       onClick={
         !isInCart
           ? () => {

@@ -230,12 +230,11 @@ export const CartProvider = (props) => {
       cart?.items?.reduce((acc, item) => {
         return acc + (typeof item.product === 'object' ? item?.product?.price * item?.quantity : 0)
       }, 0) || 0
-
     setTotal({
-      formatted: (newTotal / 100).toLocaleString('en-US', {
+      formatted: new Intl.NumberFormat('pl-PL', {
         style: 'currency',
-        currency: 'USD',
-      }),
+        currency: 'PLN',
+      }).format(newTotal),
       raw: newTotal,
     })
   }, [cart, hasInitialized])

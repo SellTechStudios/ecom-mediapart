@@ -1,3 +1,5 @@
-import { ProductsList } from './../_components/ProductList/product-list'
+import { ProductsList } from '@/components/ProductList'
 
-export default () => <ProductsList listType="outlet" />
+const OutletProductListPage = () => <ProductsList listType="outlet" />
+
+export default OutletProductListPage

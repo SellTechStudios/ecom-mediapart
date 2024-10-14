@@ -1,16 +1,13 @@
 'use client'
 import { Container } from '@/components/Container'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Fragment, useEffect, useState } from 'react'
+import { ProductTile } from '@/components/Product/ProductTile'
+import { useEffect, useState } from 'react'
 import { CategoryNavigation } from './category-navigation'
 import { FacetCheckbox, FacetRanges } from './facets'
 import { type FacetRange } from './facets/facet-ranges'
 import { inCategoryMatch, outletMatch, promotedMatch } from './queryAggregates/match'
 import { quickSearch } from './queryAggregates/search'
 import { newProductsSort } from './queryAggregates/sort'
-import { ShoppingCartIcon } from '@heroicons/react/24/outline'
-import { useCart } from '@/providers/Cart'
 
 export type ProductsListProps = {
   listType: 'all' | 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory'
@@ -26,8 +23,6 @@ export const ProductsList = (props: ProductsListProps) => {
   const [filterRanges, setFilterRanges] = useState<any>({ price: [] })
   const [facets, setFacets] = useState<any>({})
   const [products, setProducts] = useState<any>([])
-
-  const { addItemToCart, cart } = useCart()
 
   //initial category list load
   useEffect(() => {
@@ -101,7 +96,7 @@ export const ProductsList = (props: ProductsListProps) => {
   }
 
   return (
-    <Container className="grid grid-cols-4">
+    <Container className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <div>
         {/* categories */}
         <CategoryNavigation categories={categories} />
@@ -118,34 +113,11 @@ export const ProductsList = (props: ProductsListProps) => {
           onChange={(e) => onFilterRangesChange('price', e)}
         />
       </div>
-      <div className="col-span-3">
-        <div className="grid grid-cols-5 gap-8">
+      <div className="md:col-span-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {products.map((p, index) => (
-            <div key={index}>
-              <Link href={`/products/${p.slug}`}>
-                <div>
-                  <Image
-                    src={p.mediaImages[0].url}
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    className="w-full h-auto mb-2"
-                    alt="Product Image"
-                    priority
-                  />
-                </div>
-                <p className="text-sm leading-4 font-light">{p.name}</p>
-              </Link>
-              <div className="flex flex-row justify-between align-middle mt-4">
-                <p className="mt-2 font-bold">{p.price} PLN</p>
-
-                <button
-                  onClick={() => addItemToCart({ product: p, quantity: 1 })}
-                  className="flex items-center justify-center w-8 h-8 text-white bg-gray-500 rounded-sm shadow-lg cursor-pointer"
-                >
-                  <ShoppingCartIcon className="size-5" />
-                </button>
-              </div>
+            <div key={index} className="flex flex-col justify-between">
+              <ProductTile product={p} />
             </div>
           ))}
         </div>

@@ -1,7 +1,7 @@
-import { CartPage } from './CartPage'
-import { Settings } from 'src/payload-types'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { CartPage } from '@/components/CartPage'
 import { Container } from '@/components/Container'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { Settings } from 'src/payload-types'
 
 // Force this page to be dynamic so that Next.js does not cache it
 // See the note in '../[slug]/page.tsx' about this

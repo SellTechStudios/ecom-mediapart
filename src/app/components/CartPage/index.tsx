@@ -1,8 +1,8 @@
 'use client'
 
+import CartItem from '@/components/CartItem'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
-import CartItem from '../CartItem'
 
 import { Button } from '@/components/Button'
 import { LoadingShimmer } from '@/components/LoadingShimmer'
@@ -102,7 +102,7 @@ export const CartPage: React.FC<{
 
                     <div className="flex items-center justify-between pb-4 border-b border-gray-300">
                       <p className="text-lg">Delivery Charge</p>
-                      <p className="text-lg">$0</p>
+                      <p className="text-lg">0 zł</p>
                     </div>
 
                     <div className="flex items-center justify-between pb-4 border-b border-gray-300">
