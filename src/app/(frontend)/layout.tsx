@@ -32,7 +32,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Providers>
           <AdminBar />
           <LivePreviewListener />
-
           <Header />
           <main className="main py-12">{children}</main>
           <Footer />

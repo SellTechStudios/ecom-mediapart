@@ -1,19 +1,19 @@
 'use client'
 
 import { CartLink } from '@/components/CartLink'
+import { Container } from '@/components/Container'
+import { useAuth } from '@/providers/Auth'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { UserIcon } from '@heroicons/react/24/outline'
-import { useAuth } from '@payloadcms/ui/providers/Auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Header } from 'src/payload-types'
-import { Container } from '../../Container'
 import { CMSLink } from '../../Link'
 
 const HeaderComponent = ({ header }: { header: Header }) => {
-  const { user } = useAuth()
+  const { user, status } = useAuth()
   const navItems = header?.navItems || []
   const [theme, setTheme] = useState(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
@@ -21,13 +21,11 @@ const HeaderComponent = ({ header }: { header: Header }) => {
 
   useEffect(() => {
     setHeaderTheme(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname, setHeaderTheme])
 
   useEffect(() => {
     if (headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
+  }, [headerTheme, theme])
 
   return (
     <header className="py-4" {...(theme ? { 'data-theme': theme } : {})}>
