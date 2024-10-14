@@ -2,6 +2,7 @@
 
 import type { PayloadAdminBarProps } from 'payload-admin-bar'
 
+import { useAuth } from '@/providers/Auth'
 import { cn } from '@/utilities/cn'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
@@ -27,12 +28,14 @@ export const AdminBar: React.FC<{
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
+  const { user } = useAuth()
+  const isAdmin = user?.roles?.includes('admin')
 
   const onAuthChange = React.useCallback((user) => {
     setShow(user?.id)
   }, [])
 
-  return (
+  return isAdmin ? (
     <div
       className={cn('py-2 bg-black text-white', {
         block: show,
@@ -65,5 +68,5 @@ export const AdminBar: React.FC<{
         />
       </div>
     </div>
-  )
+  ) : null
 }
