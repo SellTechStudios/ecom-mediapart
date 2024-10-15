@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
       </head>
-      <body className={jost.variable}>
+      <body className={cn(jost.variable, 'bg-zinc-100')}>
         <Providers>
           <AdminBar />
           <LivePreviewListener />
@@ -44,8 +44,4 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://payloadcms.com'),
   openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
-  },
 }

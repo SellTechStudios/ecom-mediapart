@@ -1,12 +1,14 @@
 'use client'
 
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Product } from 'src/payload-types'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Product } from 'src/payload-types'
+import { Swiper as SwiperType } from 'swiper/types'
 
 type ProductGalleryProps = {
   product: Product
@@ -14,6 +16,22 @@ type ProductGalleryProps = {
 
 export const ProductGallery: React.FC<ProductGalleryProps> = ({ product }: ProductGalleryProps) => {
   const [selectedImage, setSelectedImage] = useState(product?.mediaImages[0].url)
+  const swiperRef = useRef<SwiperType>(null)
+  const prevRef = useRef<HTMLButtonElement>(null)
+  const nextRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.params) {
+      const swiper = swiperRef.current
+      // @ts-ignore
+      swiper.params.navigation.prevEl = prevRef.current
+      // @ts-ignore
+      swiper.params.navigation.nextEl = nextRef.current
+      swiper.navigation.destroy()
+      swiper.navigation.init()
+      swiper.navigation.update()
+    }
+  }, [])
 
   return (
     <div>
@@ -28,12 +46,18 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product }: Produ
           priority
         />
       </div>
-      <div>
+      <div className="relative">
         <Swiper
           slidesPerView={4}
           spaceBetween={10}
-          navigation
           modules={[Navigation]}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+          }}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
           className="mt-4"
         >
           {product.mediaImages.map((img, i) => (
@@ -52,6 +76,23 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product }: Produ
             </SwiperSlide>
           ))}
         </Swiper>
+        <button
+          ref={prevRef}
+          className="absolute top-1/2 -left-3 transform -translate-y-1/2 z-10
+          w-8 h-8 rounded-full bg-black bg-opacity-50 flex items-center justify-center
+          text-white transition-opacity duration-200 hover:bg-opacity-100"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <button
+          ref={nextRef}
+          className="absolute top-1/2 -right-3 transform -translate-y-1/2 z-10
+          w-8 h-8 rounded-full bg-black bg-opacity-50 flex items-center justify-center
+          text-white transition-opacity duration-200 hover:bg-opacity-100"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
       </div>
     </div>
   )

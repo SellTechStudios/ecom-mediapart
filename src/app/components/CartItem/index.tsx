@@ -64,8 +64,11 @@ const QuantityButton = ({ quantity, setQuantity, addItemToCart, product }) => {
     addItemToCart({ product, quantity: Number(updatedQty) })
   }
   return (
-    <div className="border border-gray-500 grid grid-cols-[45px_1fr_45px] rounded-lg items-center h-11 max-w-[120px] self-center ">
-      <button className="flex justify-center w-full h-full cursor-pointer" onClick={decrementQty}>
+    <div className="border border-gray-500 grid grid-cols-[45px_1fr_45px] rounded-lg items-center h-11 max-w-[120px] self-center box-content">
+      <button
+        className="flex justify-center w-full h-full cursor-pointer bg-white"
+        onClick={decrementQty}
+      >
         <Image
           src="/assets/icons/minus.svg"
           alt="minus"
@@ -82,7 +85,7 @@ const QuantityButton = ({ quantity, setQuantity, addItemToCart, product }) => {
         onChange={enterQty}
       />
 
-      <button className="self-center w-full h-full cursor-pointer" onClick={incrementQty}>
+      <button className="self-center w-full h-full cursor-pointer bg-white" onClick={incrementQty}>
         <Image src="/assets/icons/plus.svg" alt="plus" width={24} height={24} className="m-auto" />
       </button>
     </div>

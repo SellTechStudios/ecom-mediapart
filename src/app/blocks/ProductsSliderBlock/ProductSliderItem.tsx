@@ -1,6 +1,7 @@
+import { Button } from '@/components/ui/button'
 import { useCart } from '@/providers/Cart'
 import { formatCurrency } from '@/utilities/formatPrice'
-import { ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { CircleCheckBig, ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from 'src/payload-types'
@@ -12,17 +13,17 @@ type ProductSliderItemProps = {
 export const ProductSliderItem: React.FC<ProductSliderItemProps> = ({
   product,
 }: ProductSliderItemProps) => {
-  const { addItemToCart, cart } = useCart()
-
+  const { addItemToCart, isProductInCart } = useCart()
+  const isInCart = isProductInCart(product)
   return (
-    <div className="relative h-full group">
+    <div className="relative h-full group/container bg-white rounded-lg">
       <Link
         href={`/products/${product.slug}`}
-        className="flex flex-col items-center self-stretch justify-between h-full transition-all duration-200 ease-in-out rounded-sm hover:shadow-lg"
+        className="flex flex-col items-center self-stretch justify-between h-full transition-all duration-200 ease-in-out rounded-lg"
       >
         {product.mediaImages[0] && (
           <Image
-            className="object-cover w-auto h-[350px]"
+            className="object-cover w-auto h-[350px] rounded-t-lg"
             src={product.mediaImages[0].url}
             width={100}
             height={280}
@@ -32,18 +33,23 @@ export const ProductSliderItem: React.FC<ProductSliderItemProps> = ({
           />
         )}
 
-        <div className="flex flex-col h-full p-2 transition-all duration-200 ease-in-out group-hover:bg-gray-300">
-          <p className="h-full font-bold">{product.name}</p>
-          <p className="mt-4">{formatCurrency(product.price)}</p>
+        <div className="flex flex-col p-2 transition-all duration-200 ease-in-out flex-1 px-4">
+          <p className="h-full text-sm line-clamp-3">{product.name}</p>
+          <p className="mt-2 font-bold text-red-500">{formatCurrency(product.price)}</p>
         </div>
       </Link>
-      <div className="absolute transition-opacity duration-200 ease-in-out opacity-0 top-2 right-2 group-hover:opacity-100">
-        <button
-          onClick={() => addItemToCart({ product, quantity: 1 })}
-          className="flex items-center justify-center w-8 h-8 text-white bg-gray-500 rounded-sm shadow-lg cursor-pointer"
+      <div className="absolute inset-0 bg-slate-950 bg-opacity-40 opacity-0 group-hover/container:opacity-100 transition-opacity duration-300 ease-in-out pointer-events-none rounded-lg"></div>
+
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-200 ease-in-out opacity-0 group-hover/container:opacity-100">
+        <Button
+          onClick={!isInCart ? () => addItemToCart({ product, quantity: 1 }) : undefined}
+          href={isInCart ? '/cart' : undefined}
+          className="max-w-[200px] w-full"
         >
-          <ShoppingCartIcon className="size-5" />
-        </button>
+          {!isInCart && <ShoppingCart className="mr-3" />}
+          {isInCart && <CircleCheckBig className="mr-3" />}
+          {isInCart ? `Pokaż w koszyku` : `Dodaj do koszyka`}
+        </Button>
       </div>
     </div>
   )
