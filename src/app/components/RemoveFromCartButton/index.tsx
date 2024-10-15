@@ -1,10 +1,10 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import { useCart } from '@/providers/Cart'
 import { cn } from '@/utilities/cn'
 import { Trash2 } from 'lucide-react'
 import React from 'react'
 import { Product } from 'src/payload-types'
-import { Button } from '../ui/button'
 
 export const RemoveFromCartButton: React.FC<{
   className?: string
