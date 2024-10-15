@@ -1,4 +1,5 @@
 import { useCart } from '@/providers/Cart'
+import { formatCurrency } from '@/utilities/formatPrice'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -33,12 +34,7 @@ export const ProductSliderItem: React.FC<ProductSliderItemProps> = ({
 
         <div className="flex flex-col h-full p-2 transition-all duration-200 ease-in-out group-hover:bg-gray-300">
           <p className="h-full font-bold">{product.name}</p>
-          <p className="mt-4">
-            {new Intl.NumberFormat('pl-PL', {
-              style: 'currency',
-              currency: 'PLN',
-            }).format(product.price)}
-          </p>
+          <p className="mt-4">{formatCurrency(product.price)}</p>
         </div>
       </Link>
       <div className="absolute transition-opacity duration-200 ease-in-out opacity-0 top-2 right-2 group-hover:opacity-100">

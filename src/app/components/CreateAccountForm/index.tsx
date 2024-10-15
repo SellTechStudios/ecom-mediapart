@@ -1,8 +1,8 @@
 //CreateAccountForm
 'use client'
-import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/providers/Auth'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -62,11 +62,9 @@ export const CreateAccountForm: React.FC = () => {
         error={errors.passwordConfirm}
       />
       <Message error={error} success={success} className="mb-4" />
-      <Button
-        type="submit"
-        label={isLoading ? 'Processing' : 'Create Account'}
-        disabled={isLoading}
-      />
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? 'Processing' : 'Create Account'}
+      </Button>
     </form>
   )
 }

@@ -1,8 +1,10 @@
-import React from 'react'
-import Image from 'next/image'
-import classes from './index.module.scss'
-import { Product } from 'src/payload-types'
+'use client'
+import { Button } from '@/components/ui/button'
 import { useCart } from '@/providers/Cart'
+import { cn } from '@/utilities/cn'
+import { Trash2 } from 'lucide-react'
+import React from 'react'
+import { Product } from 'src/payload-types'
 
 export const RemoveFromCartButton: React.FC<{
   className?: string
@@ -15,24 +17,18 @@ export const RemoveFromCartButton: React.FC<{
   const productIsInCart = isProductInCart(product)
 
   if (!productIsInCart) {
-    return <div>Item is not in the cart</div>
+    return null
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="clear"
       onClick={() => {
         deleteItemFromCart(product)
       }}
-      className={[className, classes.removeFromCartButton].filter(Boolean).join(' ')}
+      className={cn(className, 'text-red-500')}
     >
-      <Image
-        src="/assets/icons/delete.svg"
-        alt="delete"
-        width={24}
-        height={24}
-        className={classes.qtnBt}
-      />
-    </button>
+      <Trash2 />
+    </Button>
   )
 }

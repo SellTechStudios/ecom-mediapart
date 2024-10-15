@@ -1,4 +1,5 @@
 import { Media } from '@/components/Media'
+import { formatCurrency } from '@/utilities/formatPrice'
 import Image from 'next/image'
 import Link from 'next/link'
 type CheckoutItemProps = {
@@ -43,10 +44,7 @@ export const CheckoutItem = ({ product, title, metaImage, quantity, index }: Che
       </div>
 
       <div className="flex items-center justify-end">
-        {new Intl.NumberFormat('pl-PL', {
-          style: 'currency',
-          currency: 'PLN',
-        }).format(product.price * quantity)}
+        {formatCurrency(product.price * quantity)}
       </div>
     </li>
   )

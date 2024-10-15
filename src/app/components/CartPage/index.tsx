@@ -4,8 +4,8 @@ import CartItem from '@/components/CartItem'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import { Button } from '@/components/Button'
 import { LoadingShimmer } from '@/components/LoadingShimmer'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/providers/Auth'
 import { useCart } from '@/providers/Cart'
 import { Settings } from 'src/payload-types'
@@ -38,23 +38,23 @@ export const CartPage: React.FC<{
             <Fragment>
               {cartIsEmpty ? (
                 <div className="my-8 text-center">
-                  Your cart is empty.
+                  Twój koszyk jest pusty.
                   {typeof productsPage === 'object' && productsPage?.slug && (
                     <Fragment>
                       {' '}
                       <Link href={`/${productsPage.slug}`} className="text-blue-600 underline">
-                        Click here
+                        Kliknij tutaj
                       </Link>
-                      {` to shop.`}
+                      {` żeby zacząć zakupy.`}
                     </Fragment>
                   )}
                   {!user && (
                     <Fragment>
                       {' '}
                       <Link href={`/login?redirect=%2Fcart`} className="text-blue-600 underline">
-                        Log in
+                        Zaloguj
                       </Link>
-                      {` to view a saved cart.`}
+                      {` się, aby zobaczyć swoje zamówienia.`}
                     </Fragment>
                   )}
                 </div>
@@ -63,11 +63,11 @@ export const CartPage: React.FC<{
                   <div>
                     {/* CART LIST HEADER */}
                     <div className="hidden sm:grid sm:grid-cols-[100px_3fr_1fr_1fr_1fr] gap-6 mb-2">
-                      <p>Product</p>
+                      <p>Produkt</p>
                       <p></p>
-                      <p className="text-center">Quantity</p>
-                      <p className="text-center">Subtotal</p>
-                      <p className="text-center">Remove</p>
+                      <p className="text-center">Ilość</p>
+                      <p className="text-center">Łącznie</p>
+                      <p className="text-center">Usuń</p>
                     </div>
                     {/* CART ITEM LIST */}
                     <ul className="border-t border-gray-300">
@@ -97,7 +97,7 @@ export const CartPage: React.FC<{
 
                   <div className="flex flex-col gap-4 p-6 border border-gray-300">
                     <div className="flex items-center justify-between pb-4 border-b border-gray-300">
-                      <h6 className="text-lg font-semibold">Summary</h6>
+                      <h6 className="text-lg font-semibold">Podsumowanie</h6>
                     </div>
 
                     <div className="flex items-center justify-between pb-4 border-b border-gray-300">
@@ -106,16 +106,16 @@ export const CartPage: React.FC<{
                     </div>
 
                     <div className="flex items-center justify-between pb-4 border-b border-gray-300">
-                      <p className="text-lg">Grand Total</p>
+                      <p className="text-lg">Łączna ilość</p>
                       <p className="text-lg font-semibold">{cartTotal.formatted}</p>
                     </div>
 
                     <Button
                       href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
-                      label={user ? 'Checkout' : 'Login to checkout'}
-                      variant="primary"
                       className="w-full"
-                    />
+                    >
+                      {user ? 'Przejdź do płatności' : 'Zaloguj się, aby kontynuować'}{' '}
+                    </Button>
                   </div>
                 </div>
               )}

@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react'
 
+import { formatCurrency } from '@/utilities/formatPrice'
 import { Product, User } from 'src/payload-types'
 import { useAuth } from '../Auth'
 import { CartItem, cartReducer } from './reducer'
@@ -231,10 +232,7 @@ export const CartProvider = (props) => {
         return acc + (typeof item.product === 'object' ? item?.product?.price * item?.quantity : 0)
       }, 0) || 0
     setTotal({
-      formatted: new Intl.NumberFormat('pl-PL', {
-        style: 'currency',
-        currency: 'PLN',
-      }).format(newTotal),
+      formatted: formatCurrency(newTotal),
       raw: newTotal,
     })
   }, [cart, hasInitialized])

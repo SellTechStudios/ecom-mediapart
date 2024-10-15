@@ -1,6 +1,7 @@
 'use client'
 
 import { RemoveFromCartButton } from '@/components/RemoveFromCartButton'
+import { formatCurrency } from '@/utilities/formatPrice'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -11,7 +12,7 @@ const CartItem = ({ product, title, image, qty, addItemToCart }) => {
   return (
     <li className="grid grid-cols-[100px_3fr_1fr_1fr_1fr] py-6 gap-6 border-b border-gray-300">
       <Link href={`/products/${product.slug}`} className="relative h-full">
-        {!image && <span>No image</span>}
+        {!image && <span>Brak obrazka</span>}
         {image && typeof image !== 'string' && (
           <Image
             src={image.url}
@@ -23,7 +24,7 @@ const CartItem = ({ product, title, image, qty, addItemToCart }) => {
         )}
       </Link>
 
-      <div className="self-center truncate">{title}</div>
+      <div className="self-center line-clamp-3">{title}</div>
       <QuantityButton
         quantity={quantity}
         setQuantity={setQuantity}
@@ -32,10 +33,7 @@ const CartItem = ({ product, title, image, qty, addItemToCart }) => {
       />
 
       <div className="flex items-center justify-center">
-        {new Intl.NumberFormat('pl-PL', {
-          style: 'currency',
-          currency: 'PLN',
-        }).format(product.price * quantity)}
+        {formatCurrency(product.price * quantity)}
       </div>
       <div className="flex self-center justify-center">
         <RemoveFromCartButton product={product} />
