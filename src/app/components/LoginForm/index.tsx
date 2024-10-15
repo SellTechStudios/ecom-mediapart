@@ -50,7 +50,7 @@ const LoginForm: React.FC = () => {
       <Message error={error} className="mb-4" />
       <Input
         name="email"
-        label="Email Address"
+        label="Email"
         required
         register={register}
         error={errors.email}
@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
       <Input
         name="password"
         type="password"
-        label="Password"
+        label="Hasło"
         required
         register={register}
         error={errors.password}
@@ -68,9 +68,9 @@ const LoginForm: React.FC = () => {
         {isLoading ? 'Processing' : 'Login'}
       </Button>
       <div className="flex items-center justify-between w-full">
-        <Link href="/create-account">Create an account</Link>
+        <Link href="/create-account">Utwórz konto</Link>
         <br />
-        <Link href={`/recover-password${allParams}`}>Recover your password</Link>
+        <Link href={`/recover-password${allParams}`}>Przywróć hasło</Link>
       </div>
     </form>
   )

@@ -6,10 +6,10 @@ import React, { Fragment, useEffect } from 'react'
 
 import { CheckoutItem } from './CheckoutItem'
 
+import { InpostGeowidget } from '@/components/InPostGeoWidget'
 import { useAuth } from '@/providers/Auth'
 import { useCart } from '@/providers/Cart'
 import { Settings } from 'src/payload-types'
-import { InpostGeowidget } from '@/components/InPostGeoWidget'
 
 export const CheckoutPage: React.FC<{
   settings: Settings
@@ -47,10 +47,10 @@ export const CheckoutPage: React.FC<{
         <Fragment>
           <div className="my-8">
             <div className="hidden sm:grid grid-cols-[100px_5fr_1fr_1fr] gap-6 pb-2 border-b border-gray-300">
-              <p>Products</p>
+              <p>Produkty</p>
               <p></p>
-              <div className="text-center">Quantity</div>
-              <div className="text-right">Subtotal</div>
+              <div className="text-center">Ilość</div>
+              <div className="text-right">Łącznie</div>
             </div>
 
             <ul>
@@ -79,8 +79,8 @@ export const CheckoutPage: React.FC<{
                 }
                 return null
               })}
-              <div className="flex justify-between px-6 py-6 font-semibold text-right bg-gray-300 mb-15">
-                <p>Order Total</p>
+              <div className="flex justify-between px-6 py-6 font-semibold text-right bg-gray-300 dark:bg-zinc-600 mb-15">
+                <p>Łączna ilość</p>
                 <p>{cartTotal.formatted}</p>
               </div>
             </ul>

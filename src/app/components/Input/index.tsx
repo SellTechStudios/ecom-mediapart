@@ -1,7 +1,6 @@
+import { cn } from '@/utilities/cn'
 import React from 'react'
-import { FieldValues, UseFormRegister, Validate } from 'react-hook-form'
-
-import classes from './index.module.scss'
+import { FieldValues, UseFormRegister } from 'react-hook-form'
 
 type Props = {
   name: string
@@ -25,33 +24,36 @@ export const Input: React.FC<Props> = ({
   disabled,
 }) => {
   return (
-    <div className={classes.inputWrap}>
-      <label htmlFor="name" className={classes.label}>
+    <div className="w-full">
+      <label htmlFor={name} className="block text-xs leading-none mb-2">
         {label}
-        {required ? <span className={classes.asterisk}>&nbsp;*</span> : ''}
+        {required && <span className="text-red-500">&nbsp;*</span>}
       </label>
       <input
-        className={[classes.input, error && classes.error].filter(Boolean).join(' ')}
-        {...{ type }}
+        id={name}
+        name={name}
+        className={cn(
+          'w-full font-sans rounded-lg border border-gray-500bg-gray-100 text-gray-900 h-[52px] p-4 text-base focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:bg-gray-200',
+          {
+            'bg-red-100 dark:bg-red-100': error,
+          },
+        )}
+        type={type}
         {...register(name, {
           required,
           validate,
-          ...(type === 'email'
-            ? {
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: 'Please enter a valid email',
-                },
-              }
-            : {}),
+          ...(type === 'email' && {
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Proszę wprowadzić poprawny adres e-mail',
+            },
+          }),
         })}
         disabled={disabled}
       />
       {error && (
-        <div className={classes.errorMessage}>
-          {!error?.message && error?.type === 'required'
-            ? 'This field is required'
-            : error?.message}
+        <div className="text-sm leading-tight mt-1 text-red-500">
+          {!error?.message && error?.type === 'required' ? 'To pole jest wymagane' : error?.message}
         </div>
       )}
     </div>

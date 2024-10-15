@@ -2,11 +2,11 @@ import React, { Fragment } from 'react'
 
 import type { Page } from '../../../payload-types'
 
+import { ProductsSliderBlock } from '@/blocks/ProductsSliderBlock'
 import { ContentBlock } from '../../blocks/Content'
 import { FormBlock } from '../../blocks/Form'
 import { MediaBlock } from '../../blocks/MediaBlock'
 import { toKebabCase } from '../../utilities/toKebabCase'
-import { ProductsSliderBlock } from '@/blocks/ProductsSliderBlock'
 
 const blockComponents = {
   content: ContentBlock,

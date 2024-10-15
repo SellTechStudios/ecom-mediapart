@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
       </head>
-      <body className={cn(jost.variable, 'bg-zinc-100')}>
+      <body className={cn(jost.variable, 'light:bg-zinc-100 dark:bg-zinc-700')}>
         <Providers>
           <AdminBar />
           <LivePreviewListener />

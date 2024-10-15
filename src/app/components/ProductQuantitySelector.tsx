@@ -59,7 +59,7 @@ export const ProductQuantitySelector: React.FC<ProductQuantitySelectorProps> = (
 
       <input
         type="text"
-        className="text-center h-full w-full min-w-[30px] border-none outline-none text-lg font-bold self-center"
+        className="text-center h-full w-full min-w-[30px] border-none outline-none text-lg font-bold self-center dark:text-black"
         value={quantity}
         onChange={enterQty}
       />
