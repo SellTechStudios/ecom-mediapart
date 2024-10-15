@@ -39,7 +39,7 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product }: Produ
         <Image
           src={selectedImage}
           alt="Selected Product Image"
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-0 w-full h-full rounded-lg"
           width={100}
           height={100}
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
