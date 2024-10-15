@@ -163,7 +163,7 @@ const ProductsSliderSkeleton = () => {
       <div className="relative">
         <div className="flex space-x-6 lg:space-x-9 overflow-hidden">
           {[...Array(slidesPerView)].map((_, index) => (
-            <div key={index} className={slidesPerView === 1 ? 'w-full' : `w-1/${slidesPerView}`}>
+            <div key={index} className="w-full">
               <div className="relative h-full bg-white rounded-lg overflow-hidden">
                 <div className="animate-pulse">
                   <div className="h-[350px] bg-gray-300"></div>
