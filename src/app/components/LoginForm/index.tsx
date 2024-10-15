@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/providers/Auth'
 
 type FormData = {
@@ -64,13 +64,9 @@ const LoginForm: React.FC = () => {
         register={register}
         error={errors.password}
       />
-      <Button
-        type="submit"
-        variant="primary"
-        label={isLoading ? 'Processing' : 'Login'}
-        disabled={isLoading}
-        className="w-full"
-      />
+      <Button type="submit" disabled={isLoading} className="w-full">
+        {isLoading ? 'Processing' : 'Login'}
+      </Button>
       <div className="flex items-center justify-between w-full">
         <Link href="/create-account">Create an account</Link>
         <br />

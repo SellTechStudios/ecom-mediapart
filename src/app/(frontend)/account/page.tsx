@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/providers/Auth'
 
 type FormData = {
@@ -153,13 +153,9 @@ const AccountPage: React.FC = () => {
           </Fragment>
         )}
         <div className="flex gap-4">
-          <Button
-            type="submit"
-            label={isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
-            disabled={isLoading}
-            variant="primary"
-            className="mt-3"
-          />
+          <Button type="submit" disabled={isLoading} className="mt-3">
+            {isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
+          </Button>
           <Button
             className="mt-3"
             variant="secondary"

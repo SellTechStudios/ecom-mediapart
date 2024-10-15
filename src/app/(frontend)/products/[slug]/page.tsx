@@ -6,6 +6,9 @@ import { productFetchBySlug } from '@/_api/products'
 import { AddToCartButton } from '@/components/AddToCartButton'
 import { Container } from '@/components/Container'
 import { ProductGallery } from '@/components/ProductDetails/ProductGallery'
+import { ProductQuantitySelector } from '@/components/ProductQuantitySelector'
+import { RemoveFromCartButton } from '@/components/RemoveFromCartButton'
+import { formatCurrency } from '@/utilities/formatPrice'
 import { generateProductMeta } from '@/utilities/generateProductMeta'
 import { Product as ProductType } from 'src/payload-types'
 import { CollectionMeta } from '../../../../payload/collections/_interfaces/collection-meta'
@@ -26,19 +29,15 @@ export default async function Product({ params: { slug } }: { params: { slug: st
       <section className="md:gap-4 md:grid md:grid-cols-2">
         <ProductGallery product={product} />
         <div>
-          <h1 className="leading-10 text-h1 font-h1">{product.name}</h1>
-          <h2 className="text-red-600 text-h2 font-h2">
-            {new Intl.NumberFormat('pl-PL', {
-              style: 'currency',
-              currency: 'PLN',
-            }).format(product.price)}
-          </h2>
-          <AddToCartButton product={product} />
+          <h1 className="text-3xl mt-4 md:mt-0">{product.name}</h1>
+          <h2 className="text-red-600 text-2xl my-4">{formatCurrency(product.price)}</h2>
+          <div className="flex gap-4 items-center">
+            <AddToCartButton product={product} />
+            <ProductQuantitySelector product={product} />
+            <RemoveFromCartButton product={product} />
+          </div>
+          <div className="mt-4" dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
-      </section>
-      <section className="h-full mt-8">
-        <h1 className="text-h3 font-h3">Opis Produktu</h1>
-        <div dangerouslySetInnerHTML={{ __html: product.description }} />
       </section>
     </Container>
   )

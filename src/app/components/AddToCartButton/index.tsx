@@ -1,9 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { CircleCheckBig, ShoppingCart } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 
 import { useCart } from '@/providers/Cart'
 import { cn } from '@/utilities/cn'
@@ -18,7 +18,6 @@ export const AddToCartButton: React.FC<{
   const { cart, addItemToCart, isProductInCart, hasInitializedCart } = useCart()
 
   const [isInCart, setIsInCart] = useState<boolean>()
-  const router = useRouter()
 
   useEffect(() => {
     setIsInCart(isProductInCart(product))
@@ -27,10 +26,6 @@ export const AddToCartButton: React.FC<{
   return (
     <Button
       href={isInCart ? '/cart' : undefined}
-      type={!isInCart ? 'button' : undefined}
-      label={isInCart ? `✓ View in cart` : `Add to cart`}
-      el={isInCart ? 'link' : undefined}
-      variant="primary"
       className={cn(
         'transition-opacity duration-100',
         !hasInitializedCart && 'opacity-0 invisible',
@@ -42,11 +37,13 @@ export const AddToCartButton: React.FC<{
                 product,
                 quantity,
               })
-
-              router.push('/cart')
             }
           : undefined
       }
-    />
+    >
+      {!isInCart && <ShoppingCart className="mr-3" />}
+      {isInCart && <CircleCheckBig className="mr-3" />}
+      {isInCart ? `Pokaż w koszyku` : `Dodaj do koszyka`}
+    </Button>
   )
 }
