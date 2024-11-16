@@ -1,12 +1,12 @@
 @use './queries.scss' as *;
 @use './colors.scss' as *;
 @use './type.scss' as *;
-@import "./theme.scss";
+@import './theme.scss';
 
 :root {
   --base: 24px;
-  --font-body: 'Jost', sans-serif;
-  --font-jost: 'Jost', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
   --gutter-h: 180px;
   --block-padding: 120px;
@@ -32,8 +32,8 @@ html {
   -webkit-font-smoothing: antialiased;
   opacity: 0;
 
-  &[data-theme=dark],
-  &[data-theme=light] {
+  &[data-theme='dark'],
+  &[data-theme='light'] {
     opacity: initial;
   }
 }
@@ -45,7 +45,7 @@ body,
 }
 
 body {
-  font-family: var(--font-jost);
+  font-family: var(--font-poppins);
   margin: 0;
   padding: 0;
   color: var(--color-dark-500);
@@ -114,12 +114,12 @@ a {
   text-decoration: none;
 
   &:focus {
-    opacity: .8;
+    opacity: 0.8;
     outline: none;
   }
 
   &:active {
-    opacity: .7;
+    opacity: 0.7;
     outline: none;
   }
 }
