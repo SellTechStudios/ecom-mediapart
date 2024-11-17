@@ -2,16 +2,17 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/utilities/cn'
 import React from 'react'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
-
 type Props = {
   name: string
-  label: string
+  label?: string
   register: UseFormRegister<FieldValues & any>
   required?: boolean
   error: any
   type?: 'text' | 'number' | 'password' | 'email'
   validate?: (value: string) => boolean | string
   disabled?: boolean
+  defaultValue?: string
+  id?: string
 }
 
 export const Input: React.FC<Props> = ({
@@ -23,19 +24,25 @@ export const Input: React.FC<Props> = ({
   type = 'text',
   validate,
   disabled,
+  defaultValue,
+  id,
 }) => {
   return (
     <div className="w-full">
-      <Label htmlFor={name} className="mb-2 text-xs leading-none">
-        {label}
-        {required && <span className="text-red-500">&nbsp;*</span>}
-      </Label>
+      {label && (
+        <Label htmlFor={name} className="mb-2 text-xs leading-none">
+          {label}
+          {required && <span className="text-red-500">&nbsp;*</span>}
+        </Label>
+      )}
       <input
         type={type}
+        id={id}
         className={cn(
           'flex h-10 w-full rounded border border-border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
           error && 'border-red-500 bg-red-100',
         )}
+        defaultValue={defaultValue}
         {...register(name, {
           required,
           validate,
