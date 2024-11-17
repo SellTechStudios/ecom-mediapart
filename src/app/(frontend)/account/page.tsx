@@ -5,9 +5,9 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useForm } from 'react-hook-form'
 
 import { Container } from '@/components/Container'
-import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useAuth } from '@/providers/Auth'
 
 type FormData = {

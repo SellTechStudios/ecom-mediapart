@@ -34,7 +34,7 @@ export const ProductSliderItem: React.FC<ProductSliderItemProps> = ({
         )}
 
         <div className="flex flex-col p-2 transition-all duration-200 ease-in-out flex-1 px-4">
-          <p className="h-full text-sm line-clamp-3 dark:text-gray-700">{product.name}</p>
+          <p className="h-full text-sm line-clamp-3">{product.name}</p>
           <p className="mt-2 font-bold text-red-500">{formatCurrency(product.price)}</p>
         </div>
       </Link>

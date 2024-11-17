@@ -1,6 +1,5 @@
+import clsx from 'clsx'
 import React from 'react'
-
-import classes from './index.module.scss'
 
 export const Message: React.FC<{
   message?: React.ReactNode
@@ -14,16 +13,14 @@ export const Message: React.FC<{
   if (messageToRender) {
     return (
       <div
-        className={[
-          classes.message,
+        className={clsx(
+          'p-4 w-full text-sm rounded-md',
           className,
-          error && classes.error,
-          success && classes.success,
-          warning && classes.warning,
-          !error && !success && !warning && classes.default,
-        ]
-          .filter(Boolean)
-          .join(' ')}
+          error && 'bg-red-500 text-white',
+          success && 'bg-green-500 text-white',
+          warning && 'bg-yellow-500 text-black',
+          !error && !success && !warning && 'bg-gray-100 text-black',
+        )}
       >
         {messageToRender}
       </div>

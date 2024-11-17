@@ -79,7 +79,7 @@ export const CheckoutPage: React.FC<{
                 }
                 return null
               })}
-              <div className="flex justify-between px-6 py-6 font-semibold text-right bg-gray-300 dark:bg-zinc-600 mb-15">
+              <div className="flex justify-between px-6 py-6 font-semibold text-right bg-gray-300 mb-15">
                 <p>Łączna ilość</p>
                 <p>{cartTotal.formatted}</p>
               </div>
