@@ -26,6 +26,7 @@ export const Email: React.FC<
         register={register}
         label={label}
         error={errors[name]}
+        required={requiredFromProps}
       />
     </Width>
   )
