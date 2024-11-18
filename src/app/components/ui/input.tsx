@@ -1,5 +1,5 @@
 import { Label } from '@/components/ui/label'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/utilities'
 import React from 'react'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
 type Props = {
