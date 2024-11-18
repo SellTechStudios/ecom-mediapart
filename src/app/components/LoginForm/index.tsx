@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useAuth } from '@/providers/Auth'
 
 type FormData = {

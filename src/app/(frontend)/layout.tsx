@@ -10,7 +10,7 @@ import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { LivePreviewListener } from '../components/LivePreviewListener'
 import { Providers } from '../providers'
-import { InitTheme } from '../providers/Theme/InitTheme'
+
 import { mergeOpenGraph } from '../utilities/mergeOpenGraph'
 import './globals.css'
 
@@ -23,10 +23,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
-        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
       </head>
-      <body className={cn(poppins.className, 'light:bg-zinc-100 dark:bg-zinc-700')}>
+      <body className={cn(poppins.className)}>
         <Providers>
           <AdminBar />
           <LivePreviewListener />

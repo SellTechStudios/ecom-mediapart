@@ -9,9 +9,8 @@ import {
 } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Container } from '../../Container'
 import { Footer } from 'src/payload-types'
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { Container } from '../../Container'
 
 const FooterComponent = ({ footer }: { footer: Footer }) => {
   // const pathname = usePathname()
@@ -122,11 +121,6 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               </div>
             </div>
           </nav>
-
-          {/* theme */}
-          <div className="flex flex-col prose">
-            <ThemeSelector />
-          </div>
         </nav>
       </Container>
     </footer>
