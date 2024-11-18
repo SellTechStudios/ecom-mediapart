@@ -36,6 +36,7 @@ import { Orders } from './payload/collections/eCom/Orders'
 import { Settings } from './payload/globals/Settings/Settings'
 import { ProductImportsAdmin } from './payload/globals/ProductsImport/ProductImportsAdmin'
 import ProductErpCategory from './payload/collections/eCom/ProductErpCategory'
+import { PaymentMethods } from './payload/collections/eCom/PaymentMethods'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -121,6 +122,7 @@ export default buildConfig({
     Products,
     UOMs,
     Warehouse,
+    PaymentMethods,
     ProductCategory,
     ProductErpCategory,
     Manufacturer,

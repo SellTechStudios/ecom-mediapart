@@ -4,6 +4,7 @@ import { clearUserCart } from './hooks/clearUserCart'
 import { populateOrderedBy } from './hooks/populateOrderedBy'
 import { updateUserPurchases } from './hooks/updateUserPurchases'
 import { CollectionConfig } from 'payload'
+import { initTransactionHandler } from '@/_api/checkout'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -21,6 +22,13 @@ export const Orders: CollectionConfig = {
     create: admins,
     delete: admins,
   },
+  endpoints: [
+    {
+      path: '/init-payment',
+      method: 'post',
+      handler: initTransactionHandler,
+    },
+  ],
   fields: [
     {
       name: 'orderedBy',

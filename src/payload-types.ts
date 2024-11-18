@@ -29,6 +29,7 @@ export interface Config {
     products: Product;
     uom: Uom;
     warehouses: Warehouse;
+    'payment-methods': PaymentMethod;
     'product-category': ProductCategory;
     'product-erp-category': ProductErpCategory;
     manufacturer: Manufacturer;
@@ -499,6 +500,16 @@ export interface Uom {
   id: string;
   erpId: string;
   name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-methods".
+ */
+export interface PaymentMethod {
+  name: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
 }

@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import { CheckoutItem } from './CheckoutItem'
 
@@ -10,6 +11,9 @@ import { InpostGeowidget } from '@/components/InPostGeoWidget'
 import { useAuth } from '@/providers/Auth'
 import { useCart } from '@/providers/Cart'
 import { Settings } from 'src/payload-types'
+import { P24PaymentMethod } from '@/_api/checkout.types'
+
+type PaymentMethod = Omit<P24PaymentMethod, 'status'>
 
 export const CheckoutPage: React.FC<{
   settings: Settings
@@ -22,12 +26,33 @@ export const CheckoutPage: React.FC<{
   const router = useRouter()
 
   const { cart, cartIsEmpty, cartTotal } = useCart()
+  const [methods, setMethods] = useState<PaymentMethod[]>([])
+
+  const onInitPayment = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/init-payment`, {
+      method: 'POST',
+    })
+    const result = await response.json()
+
+    console.log(result)
+  }
 
   useEffect(() => {
     if (user !== null && cartIsEmpty) {
       router.push('/cart')
     }
   }, [router, user, cartIsEmpty])
+
+  useEffect(() => {
+    const fetchPaymnetMethodsEffect = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/payment-methods/p24`)
+      const methods = await response.json()
+
+      setMethods(methods as PaymentMethod[])
+    }
+
+    fetchPaymnetMethodsEffect()
+  }, [])
 
   return (
     <Fragment>
@@ -93,6 +118,27 @@ export const CheckoutPage: React.FC<{
               }}
               token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzQlpXVzFNZzVlQnpDYU1XU3JvTlBjRWFveFpXcW9Ua2FuZVB3X291LWxvIn0.eyJleHAiOjIwNDMyNzQyMzcsImlhdCI6MTcyNzkxNDIzNywianRpIjoiYTcxMzcxODYtNDlhYi00NjYyLTkzNWYtMTdmZGNkZDZiYWFlIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5pbnBvc3QucGwvYXV0aC9yZWFsbXMvZXh0ZXJuYWwiLCJzdWIiOiJmOjEyNDc1MDUxLTFjMDMtNGU1OS1iYTBjLTJiNDU2OTVlZjUzNTo4WkQ0TTZTbEl0MmtvUG9PMUdtYW5QNWEwVmdhZkZfUWdYMkFWWVQxSzVBIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2hpcHgiLCJzZXNzaW9uX3N0YXRlIjoiZDZkZDcxOGEtM2FmZC00NjIwLWI0YTQtODQ0YmNmYTA1MGU2Iiwic2NvcGUiOiJvcGVuaWQgYXBpOmFwaXBvaW50cyIsInNpZCI6ImQ2ZGQ3MThhLTNhZmQtNDYyMC1iNGE0LTg0NGJjZmEwNTBlNiIsImFsbG93ZWRfcmVmZXJyZXJzIjoiIiwidXVpZCI6ImI4NTcyNmMwLTAyMDktNDg4My1hNGVkLTI1NTQ4NmQ3OGJmNSJ9.hD9VLlPWxy_Sl-5-wrxMjBQ_NQe7Si6eoXk9D7imMcpOxrueR9axTcWgWgNACjI-FTfnKWmVuXsJiasTxmzP7qvqbm8e9SOF9_K6qcOvCn1kXd9Hq3YijyT4aeYbDMkct2C2CBOGNL6xZ-NANDYSZ8T_GjnZIMBXmx9z-ZGcA6NroZY8ThqjP-AKGLSAHVcyMcsc7CmXd1MWFJHa2WPgIq8vUKFLc-D3vgYA-4ErkUxhDv2wfUoBQGU0FGlysEVHNn7_5vcg3tcYxLd6X3T20nwWg4LZ7R04HGW1zHga-pRwSHOHh3lF4lw8u-qjXEzccdpmCkG-GWutmP4Oc576tg"
             />
+          </div>
+
+          <div className="my-8">
+            <p>Payment Methods Test</p>
+            <div className="grid grid-cols-4">
+              {methods.map((m) => {
+                return (
+                  <div
+                    key={m.id}
+                    className="cursor-pointer hover:bg-slate-300 flex flex-row gap-2 mb-2"
+                  >
+                    <img src={m.imgUrl} width={50} alt={m.name} />[{m.id}] {m.name}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="my-8">
+            <p>Init Payment Test</p>
+            <button onClick={onInitPayment}>INIT PAYMENT</button>
           </div>
         </Fragment>
       )}
