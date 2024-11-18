@@ -1,8 +1,8 @@
 //CreateAccountForm
 'use client'
-import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useAuth } from '@/providers/Auth'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'

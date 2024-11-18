@@ -13,7 +13,7 @@ export default async function Cart() {
   return (
     <div>
       <Container>
-        <h3>Cart</h3>
+        <h3>Koszyk</h3>
         <CartPage settings={settings} />
       </Container>
     </div>

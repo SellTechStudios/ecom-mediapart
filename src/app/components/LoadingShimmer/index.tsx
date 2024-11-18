@@ -1,17 +1,19 @@
+import clsx from 'clsx'
 import React from 'react'
-
-import classes from './index.module.scss'
 
 export const LoadingShimmer: React.FC<{
   number?: number
   height?: number // in `base` units
-}> = props => {
-  const arrayFromNumber = Array.from(Array(props.number || 1).keys())
+}> = ({ number = 1, height = 10 }) => {
+  const arrayFromNumber = Array.from(Array(number).keys())
 
   return (
-    <div className={classes.loading}>
+    <div className="space-y-4">
       {arrayFromNumber.map((_, index) => (
-        <div key={index} className={classes.shimmer} />
+        <div
+          key={index}
+          className={clsx('w-full bg-gray-200 rounded-md animate-pulse', `h-${height}`)}
+        />
       ))}
     </div>
   )

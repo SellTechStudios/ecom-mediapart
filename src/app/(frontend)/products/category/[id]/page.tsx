@@ -1,11 +1,7 @@
-'use client'
 import { ProductsList } from '@/components/ProductList'
-import { useParams } from 'next/navigation'
+import { fetchCategories } from '@/services'
 
-const ProductListCategoryPage = () => {
-  const params = useParams<{ id: string }>()
-
-  return <ProductsList listType="incategory" categoryId={params.id} />
+export default async function ProductListCategoryPage({ params }) {
+  const categories = await fetchCategories()
+  return <ProductsList listType="incategory" categoryId={params.id} categories={categories} />
 }
-
-export default ProductListCategoryPage

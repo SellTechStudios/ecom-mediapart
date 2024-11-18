@@ -64,7 +64,7 @@ const QuantityButton = ({ quantity, setQuantity, addItemToCart, product }) => {
     addItemToCart({ product, quantity: Number(updatedQty) })
   }
   return (
-    <div className="border border-gray-500 grid grid-cols-[45px_1fr_45px] rounded-lg items-center h-11 max-w-[120px] self-center box-content">
+    <div className="border border-gray-500 grid grid-cols-[45px_1fr_45px] items-center h-11 max-w-[120px] self-center box-content">
       <button
         className="flex justify-center w-full h-full cursor-pointer bg-white"
         onClick={decrementQty}
@@ -80,7 +80,7 @@ const QuantityButton = ({ quantity, setQuantity, addItemToCart, product }) => {
 
       <input
         type="text"
-        className="text-center h-full w-full min-w-[30px] border-none outline-none text-lg font-bold self-center dark:text-black"
+        className="text-center h-full w-full min-w-[30px] border-none outline-none text-lg font-bold self-center"
         value={quantity}
         onChange={enterQty}
       />
