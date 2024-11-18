@@ -1,6 +1,7 @@
 'use client'
 
 import { Checkbox } from '@/components/ui/checkbox'
+import { PriceRange } from '../queries/fetchProducts'
 
 type FacetProps = {
   groupName: string
@@ -14,13 +15,7 @@ type FacetProps = {
   onChange: (e: PriceRange[]) => void
 }
 
-export type PriceRange = {
-  id: string
-  lowerBound: number
-  upperBound: number
-}
-
-export default function PriceNavigation(props: FacetProps) {
+export const PriceNavigation = (props: FacetProps) => {
   const { groupName, groupValues, onChange, selectedRanges } = props
 
   const onCheckChange = (id: string, checked: boolean, lowerBound: number, upperBound: number) => {

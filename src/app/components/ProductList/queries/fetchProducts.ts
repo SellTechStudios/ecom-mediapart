@@ -1,11 +1,16 @@
 import ObjectID from 'bson-objectid'
 import { PipelineStage } from 'mongoose'
 import { Payload } from 'payload'
-import { FacetRange } from '../facets/facet-ranges'
 import stages from '../pipelineStates'
 
 const PRICE_BOUNDS = [0, 50, 100, 150, 200, 500]
 const PAGE_SIZE = 5
+
+export type PriceRange = {
+  id: string
+  lowerBound: number
+  upperBound: number
+}
 
 type ProductItem = {
   isPromoted: boolean
@@ -37,7 +42,7 @@ const fetchProducts = async (payload: Payload, filters: any) => {
   }
 
   //apply range filters match
-  for (const [key, value] of Object.entries(filters.filterRanges) as [string, FacetRange[]][]) {
+  for (const [key, value] of Object.entries(filters.filterRanges) as [string, PriceRange[]][]) {
     value?.forEach((v) => {
       matchQuery[key] = { $gte: v.lowerBound, $lte: v.upperBound }
     })
