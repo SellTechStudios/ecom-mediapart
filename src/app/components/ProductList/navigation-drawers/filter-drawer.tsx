@@ -11,7 +11,8 @@ import {
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 import ManufacturerNavigation from '../product-navigation/manufacturer-navigation'
-import PriceNavigation, { PriceRange } from '../product-navigation/price-navigation'
+import { PriceNavigation } from '../product-navigation/price-navigation'
+import { PriceRange } from '../queries/fetchProducts'
 
 type FilterDrawerProps = {
   facets: any
