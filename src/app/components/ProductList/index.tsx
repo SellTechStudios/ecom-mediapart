@@ -16,27 +16,16 @@ export type ProductsListProps = {
   listType: 'all' | 'new' | 'outlet' | 'promoted' | 'quicksearch' | 'incategory'
   searchString?: string
   categoryId?: string
+  categories: any
 }
 
 export const ProductsList = (props: ProductsListProps) => {
-  const { listType, searchString, categoryId } = props
+  const { listType, searchString, categoryId, categories } = props
 
-  const [categories, setCategories] = useState<any>([])
   const [manufacturerFilter, setFilterChecks] = useState<any>({ manufacturerId: [] })
   const [priceFilter, setFilterRanges] = useState<any>({ price: [] })
   const [facets, setFacets] = useState<any>({})
   const [products, setProducts] = useState<any>([])
-
-  useEffect(() => {
-    const fetchCategoriesEffect = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/categories`)
-      const json = await response.json()
-
-      setCategories(json)
-    }
-
-    fetchCategoriesEffect()
-  }, [])
 
   useEffect(() => {
     const fetchProductsEffect = async () => {
