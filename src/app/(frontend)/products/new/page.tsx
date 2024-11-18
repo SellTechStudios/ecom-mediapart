@@ -1,5 +1,8 @@
 import { ProductsList } from '@/components/ProductList'
 
-const NewProductsListPage = () => <ProductsList listType="new" />
+import { fetchCategories } from '@/services'
 
-export default NewProductsListPage
+export default async function NewProductsListPage() {
+  const categories = await fetchCategories()
+  return <ProductsList listType="new" categories={categories} />
+}
