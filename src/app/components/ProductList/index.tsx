@@ -2,9 +2,12 @@
 import { Container } from '@/components/Container'
 import { ProductTile } from '@/components/Product/ProductTile'
 import { useEffect, useState } from 'react'
-import { CategoryNavigation } from './category-navigation'
-import { FacetCheckbox, FacetRanges } from './facets'
-import { type FacetRange } from './facets/facet-ranges'
+import { CategoryDrawer } from './navigation-drawers/category-drawer'
+import { FilterDrawer } from './navigation-drawers/filter-drawer'
+import { CategoryNavigation } from './product-navigation/category-navigation'
+import ManufacturerNavigation from './product-navigation/manufacturer-navigation'
+import { PriceNavigation } from './product-navigation/price-navigation'
+import { PriceRange } from './queries/fetchProducts'
 import { inCategoryMatch, outletMatch, promotedMatch } from './queryAggregates/match'
 import { quickSearch } from './queryAggregates/search'
 import { newProductsSort } from './queryAggregates/sort'
@@ -19,12 +22,11 @@ export const ProductsList = (props: ProductsListProps) => {
   const { listType, searchString, categoryId } = props
 
   const [categories, setCategories] = useState<any>([])
-  const [filterChecks, setFilterChecks] = useState<any>({ manufacturerId: [] })
-  const [filterRanges, setFilterRanges] = useState<any>({ price: [] })
+  const [manufacturerFilter, setFilterChecks] = useState<any>({ manufacturerId: [] })
+  const [priceFilter, setFilterRanges] = useState<any>({ price: [] })
   const [facets, setFacets] = useState<any>({})
   const [products, setProducts] = useState<any>([])
 
-  //initial category list load
   useEffect(() => {
     const fetchCategoriesEffect = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/categories`)
@@ -36,7 +38,6 @@ export const ProductsList = (props: ProductsListProps) => {
     fetchCategoriesEffect()
   }, [])
 
-  //reload producs on filter changes
   useEffect(() => {
     const fetchProductsEffect = async () => {
       let match = {}
@@ -64,8 +65,8 @@ export const ProductsList = (props: ProductsListProps) => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/search`, {
         method: 'POST',
         body: JSON.stringify({
-          filterChecks,
-          filterRanges,
+          filterChecks: manufacturerFilter,
+          filterRanges: priceFilter,
           match,
           search,
           sort,
@@ -73,22 +74,27 @@ export const ProductsList = (props: ProductsListProps) => {
       })
       const json = await response.json()
 
+      if (
+        Object.keys(facets).length === 0 &&
+        facets.constructor === Object &&
+        Object.keys(json.meta).length > 0
+      ) {
+        setFacets(json.meta)
+      }
       setProducts(json.documents)
-      setFacets(json.meta)
     }
 
     fetchProductsEffect()
-  }, [filterChecks, filterRanges])
+  }, [manufacturerFilter, priceFilter, listType, searchString, categoryId, setFacets, facets])
 
-  //handle different facet type changes
-  const onFilterChecksChange = (prop: string, newValues: string[]) => {
+  const onManufacturerChange = (prop: string, newValues: string[]) => {
     setFilterChecks((prevState) => ({
       ...prevState,
       [prop]: newValues,
     }))
   }
 
-  const onFilterRangesChange = (prop: string, newValues: FacetRange[]) => {
+  const onPriceRangesChange = (prop: string, newValues: PriceRange[]) => {
     setFilterRanges((prevState) => ({
       ...prevState,
       [prop]: newValues,
@@ -98,23 +104,36 @@ export const ProductsList = (props: ProductsListProps) => {
   return (
     <Container className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <div>
-        {/* categories */}
-        <CategoryNavigation categories={categories} />
+        <div className="hidden md:flex flex-col">
+          <CategoryNavigation categories={categories} categoryId={categoryId} />
 
-        {/* facets */}
-        <FacetCheckbox
-          groupName="Producent"
-          groupValues={facets.manufacturer}
-          onChange={(e) => onFilterChecksChange('manufacturerId', e)}
-        />
-        <FacetRanges
-          groupName="Cena"
-          groupValues={facets.price}
-          onChange={(e) => onFilterRangesChange('price', e)}
-        />
+          <ManufacturerNavigation
+            groupName="Producent"
+            groupValues={facets.manufacturer}
+            selectedValues={manufacturerFilter.manufacturerId}
+            onChange={(e) => onManufacturerChange('manufacturerId', e)}
+          />
+          <PriceNavigation
+            selectedRanges={priceFilter.price}
+            groupName="Cena"
+            groupValues={facets.price}
+            onChange={(e) => onPriceRangesChange('price', e)}
+          />
+        </div>
       </div>
       <div className="md:col-span-3">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <h2 className="col-span-full text-4xl">Produkty</h2>
+          <div className="col-span-full flex md:hidden gap-4">
+            <CategoryDrawer categories={categories} categoryId={categoryId} />
+            <FilterDrawer
+              facets={facets}
+              manufacturerFilters={manufacturerFilter.manufacturerId}
+              priceFilters={priceFilter.price}
+              onManufacturerChange={onManufacturerChange}
+              onPriceRangesChange={onPriceRangesChange}
+            />
+          </div>
           {products.map((p, index) => (
             <div key={index} className="flex flex-col justify-between">
               <ProductTile product={p} />
