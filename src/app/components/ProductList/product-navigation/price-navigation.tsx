@@ -29,7 +29,7 @@ export const PriceNavigation = (props: FacetProps) => {
   return groupValues?.length ? (
     <>
       <h3 className="text-lg font-bold mb-2 mt-4">{groupName}</h3>
-      <ul className="space-y-2">
+      <ul className="space-y-2 inline-block">
         {groupValues?.map((facet) => (
           <li key={facet._id}>
             <label className="flex items-center space-x-2">
