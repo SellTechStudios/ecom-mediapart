@@ -25,8 +25,8 @@ export default function ManufacturerNavigation(props: ManufacturerProps) {
 
   return groupValues?.length ? (
     <>
-      <h3 className="text-lg font-semibold mb-2 mt-4">{groupName}</h3>
-      <ul className="space-y-2">
+      <h3 className="text-lg font-bold mb-2 mt-4">{groupName}</h3>
+      <ul className="space-y-2 inline-block">
         {groupValues?.map((facet) => (
           <li key={facet.id}>
             <label className="flex items-center space-x-2">

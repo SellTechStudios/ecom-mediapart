@@ -31,12 +31,12 @@ export const CategoryDrawer: React.FC<MobileFiltersProps> = ({
         Kategorie
       </Button>
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerContent>
+        <DrawerContent className="max-h-screen">
           <DrawerHeader className="flex items-center flex-col">
             <DialogTitle>Kategorie</DialogTitle>
             <DialogDescription>Wybierz kategorię, aby przeglądać produkty.</DialogDescription>
           </DrawerHeader>
-          <div className="pl-4">
+          <div className="px-4 overflow-x-auto">
             <CategoryNavigation categories={categories} categoryId={categoryId} className="flex" />
           </div>
           <DrawerFooter>
