@@ -11,18 +11,24 @@ type CategoryNavigationProps = {
 
 export const CategoryNavigation = ({ categories, categoryId }: CategoryNavigationProps) => {
   return (
-    <div className="flex flex-col">
-      {categories?.map((c) => {
-        return (
-          <Link
-            key={c._id}
-            href={`/products/category/${c._id}`}
-            className={cn('pb-2', categoryId == c._id ? 'font-bold' : '')}
-          >
-            {c.name}
-          </Link>
-        )
-      })}
-    </div>
+    <>
+      <Link href="/products" className="w-fit">
+        <h3 className="text-lg font-bold mb-2 mt-4">Kategorie</h3>
+      </Link>
+      <ul className="space-y-2 inline-block">
+        {categories?.map((c) => {
+          return (
+            <li key={c._id}>
+              <Link
+                href={`/products/category/${c._id}`}
+                className={cn('mb-2', categoryId == c._id ? 'font-semibold underline' : '')}
+              >
+                {c.name}
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </>
   )
 }

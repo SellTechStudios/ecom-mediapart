@@ -34,14 +34,14 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = (props: FilterDrawerPro
         Filtry
       </Button>
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerContent>
+        <DrawerContent className="max-h-screen">
           <DrawerHeader className="flex flex-col items-center">
             <DialogTitle>Filtry</DialogTitle>
             <DialogDescription>
               Wybierz filtry, aby zawęzić wyniki wyszukiwania produktów.
             </DialogDescription>
           </DrawerHeader>
-          <div className="pl-2">
+          <div className="px-2 overflow-x-auto">
             <PriceNavigation
               groupName="Cena"
               groupValues={facets.price}
