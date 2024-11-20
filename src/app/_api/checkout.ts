@@ -79,7 +79,7 @@ async function initTransaction(amount: number, sessionId: string, userEmail: str
         merchantId: merchantID,
         posId: merchantID,
         sessionId: sessionId,
-        amount: amount * 100,
+        amount: amount,
         currency: 'PLN',
         description: 'Test order',
         email: userEmail,
