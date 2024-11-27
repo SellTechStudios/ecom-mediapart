@@ -60,6 +60,13 @@ const submitBlikCodeHandler: PayloadHandler = async (req): Promise<Response> => 
   }
 }
 
+const p24NotificationHandler: PayloadHandler = async (req): Promise<Response> => {
+  const body = await req.text()
+  console.log(body)
+
+  return Response.json(body)
+}
+
 async function getP24PaymentMethods() {
   const base64AuthKey = buildApiKey()
 
@@ -116,7 +123,8 @@ async function initTransaction(
         waitForResult: true,
         sign: hash,
         encoding: 'UTF-8',
-        urlReturn: 'http://localhost:3000/checkout',
+        urlReturn: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/transaction-handler`,
+        urlStatus: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/transaction-handler`,
       }),
     })
 
@@ -158,4 +166,9 @@ async function submitBlikCode(token: string, blikCode: number) {
 
 const buildApiKey = () => btoa(`${merchantID}:${apiKey}`)
 
-export { paymnetMethodsHandler, initTransactionHandler, submitBlikCodeHandler }
+export {
+  paymnetMethodsHandler,
+  initTransactionHandler,
+  submitBlikCodeHandler,
+  p24NotificationHandler,
+}

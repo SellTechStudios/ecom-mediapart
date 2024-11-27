@@ -4,7 +4,11 @@ import { clearUserCart } from './hooks/clearUserCart'
 import { populateOrderedBy } from './hooks/populateOrderedBy'
 import { updateUserPurchases } from './hooks/updateUserPurchases'
 import { CollectionConfig } from 'payload'
-import { initTransactionHandler, submitBlikCodeHandler } from '@/_api/checkout'
+import {
+  initTransactionHandler,
+  p24NotificationHandler,
+  submitBlikCodeHandler,
+} from '@/_api/checkout'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -32,6 +36,11 @@ export const Orders: CollectionConfig = {
       path: '/submit-blik',
       method: 'post',
       handler: submitBlikCodeHandler,
+    },
+    {
+      path: '/transaction-handler',
+      method: 'post',
+      handler: p24NotificationHandler,
     },
   ],
   fields: [
