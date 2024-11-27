@@ -27,30 +27,40 @@ export const CheckoutPage: React.FC<{
 
   const { cart, cartIsEmpty, cartTotal } = useCart()
   const [methods, setMethods] = useState<PaymentMethod[]>([])
+  const [paymentMethod, setPaymentMethod] = useState<number>()
 
-  const onInitPayment = async () => {
+  const onInitPayment = async (methodId: number) => {
     const initPaymentResponse = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/init-payment`,
       {
         method: 'POST',
-      },
-    )
-    const initPaymentResult = await initPaymentResponse.json()
-    console.log(initPaymentResult)
-    const token = initPaymentResult.data.token
-
-    const submitBlikResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/submit-blik`,
-      {
-        method: 'POST',
         body: JSON.stringify({
-          token: token,
-          blikCode: '777123',
+          method: methodId,
         }),
       },
     )
-    const submitBlikResult = await submitBlikResponse.json()
-    console.log(submitBlikResult)
+    const initPaymentResult = await initPaymentResponse.json()
+    const token = initPaymentResult.data.token
+
+    switch (methodId) {
+      case 150: //BLIK
+        const submitBlikResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/submit-blik`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              token: token,
+              blikCode: '777123',
+            }),
+          },
+        )
+        const submitBlikResult = await submitBlikResponse.json()
+        console.log(submitBlikResult)
+        break
+      default:
+        router.push(`https://sandbox.przelewy24.pl/trnRequest/${token}`)
+        break
+    }
   }
 
   useEffect(() => {
@@ -137,24 +147,21 @@ export const CheckoutPage: React.FC<{
           </div> */}
 
           <div className="my-8">
-            <p>Payment Methods Test</p>
-            <div className="grid grid-cols-4">
+            <p>Payment Methods</p>
+            <div className="flex flex-row gap-2 flex-wrap">
               {methods.map((m) => {
                 return (
-                  <div
+                  <img
                     key={m.id}
                     className="cursor-pointer hover:bg-slate-300 flex flex-row gap-2 mb-2"
-                  >
-                    <img src={m.imgUrl} width={50} alt={m.name} />[{m.id}] {m.name}
-                  </div>
+                    src={m.imgUrl}
+                    width={50}
+                    alt={m.name}
+                    onClick={() => onInitPayment(m.id)}
+                  />
                 )
               })}
             </div>
-          </div>
-
-          <div className="my-8">
-            <p>Init Payment Test</p>
-            <button onClick={onInitPayment}>INIT PAYMENT</button>
           </div>
         </Fragment>
       )}

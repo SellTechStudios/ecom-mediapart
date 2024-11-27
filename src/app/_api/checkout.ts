@@ -2,6 +2,7 @@ import { type PayloadHandler } from 'payload'
 import crypto from 'crypto'
 import {
   P24PaymentMethodsResponse,
+  RegisterPaymentRequest,
   RegisterPaymentResponse,
   SubmitBlikTransactionRequest,
   SubmitBlikTransactionResponse,
@@ -28,9 +29,13 @@ const paymnetMethodsHandler: PayloadHandler = async (req): Promise<Response> => 
 
 const initTransactionHandler: PayloadHandler = async (req): Promise<Response> => {
   const { payload } = req
+  const body = (await req.json()) as unknown as RegisterPaymentRequest
+  const sessionId = crypto.randomBytes(20).toString('hex')
+  const amount = 100
+  const userEmail = 'karol.barkowski@gmail.com'
 
   try {
-    const result = await initTransaction(1000, '1234', 'karol.barkowski@gmail.com')
+    const result = await initTransaction(body.method, amount, sessionId, userEmail)
 
     return Response.json(result)
   } catch (error: unknown) {
@@ -72,7 +77,12 @@ async function getP24PaymentMethods() {
   return typedResponse.data.filter((m) => m.status === true)
 }
 
-async function initTransaction(amount: number, sessionId: string, userEmail: string) {
+async function initTransaction(
+  paymentMethod: number,
+  amount: number,
+  sessionId: string,
+  userEmail: string,
+) {
   const base64AuthKey = buildApiKey()
 
   const crcHashParams = {
@@ -102,7 +112,7 @@ async function initTransaction(amount: number, sessionId: string, userEmail: str
         email: userEmail,
         country: 'PL',
         language: 'pl',
-        method: 154, //BLIK
+        method: paymentMethod,
         waitForResult: true,
         sign: hash,
         encoding: 'UTF-8',

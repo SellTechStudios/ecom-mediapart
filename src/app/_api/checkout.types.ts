@@ -10,6 +10,10 @@ export type P24PaymentMethod = {
   status: boolean
 }
 
+export type RegisterPaymentRequest = {
+  method: number
+}
+
 export type RegisterPaymentResponse = {
   data: {
     token: string
