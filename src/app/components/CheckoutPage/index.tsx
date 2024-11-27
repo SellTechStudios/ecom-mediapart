@@ -11,7 +11,7 @@ import { InpostGeowidget } from '@/components/InPostGeoWidget'
 import { useAuth } from '@/providers/Auth'
 import { useCart } from '@/providers/Cart'
 import { Settings } from 'src/payload-types'
-import { P24PaymentMethod } from '@/_api/checkout.types'
+import { P24PaymentMethod, RegisterPaymentResponse } from '@/_api/checkout.types'
 
 type PaymentMethod = Omit<P24PaymentMethod, 'status'>
 
@@ -29,12 +29,28 @@ export const CheckoutPage: React.FC<{
   const [methods, setMethods] = useState<PaymentMethod[]>([])
 
   const onInitPayment = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/init-payment`, {
-      method: 'POST',
-    })
-    const result = await response.json()
+    const initPaymentResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/init-payment`,
+      {
+        method: 'POST',
+      },
+    )
+    const initPaymentResult = await initPaymentResponse.json()
+    console.log(initPaymentResult)
+    const token = initPaymentResult.data.token
 
-    console.log(result)
+    const submitBlikResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/submit-blik`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          token: token,
+          blikCode: '777123',
+        }),
+      },
+    )
+    const submitBlikResult = await submitBlikResponse.json()
+    console.log(submitBlikResult)
   }
 
   useEffect(() => {
@@ -110,7 +126,7 @@ export const CheckoutPage: React.FC<{
               </div>
             </ul>
           </div>
-          <div className="my-8" style={{ height: '600px' }}>
+          {/* <div className="my-8" style={{ height: '600px' }}>
             <p>InPost Test</p>
             <InpostGeowidget
               onPoint={(e) => {
@@ -118,7 +134,7 @@ export const CheckoutPage: React.FC<{
               }}
               token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzQlpXVzFNZzVlQnpDYU1XU3JvTlBjRWFveFpXcW9Ua2FuZVB3X291LWxvIn0.eyJleHAiOjIwNDMyNzQyMzcsImlhdCI6MTcyNzkxNDIzNywianRpIjoiYTcxMzcxODYtNDlhYi00NjYyLTkzNWYtMTdmZGNkZDZiYWFlIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5pbnBvc3QucGwvYXV0aC9yZWFsbXMvZXh0ZXJuYWwiLCJzdWIiOiJmOjEyNDc1MDUxLTFjMDMtNGU1OS1iYTBjLTJiNDU2OTVlZjUzNTo4WkQ0TTZTbEl0MmtvUG9PMUdtYW5QNWEwVmdhZkZfUWdYMkFWWVQxSzVBIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2hpcHgiLCJzZXNzaW9uX3N0YXRlIjoiZDZkZDcxOGEtM2FmZC00NjIwLWI0YTQtODQ0YmNmYTA1MGU2Iiwic2NvcGUiOiJvcGVuaWQgYXBpOmFwaXBvaW50cyIsInNpZCI6ImQ2ZGQ3MThhLTNhZmQtNDYyMC1iNGE0LTg0NGJjZmEwNTBlNiIsImFsbG93ZWRfcmVmZXJyZXJzIjoiIiwidXVpZCI6ImI4NTcyNmMwLTAyMDktNDg4My1hNGVkLTI1NTQ4NmQ3OGJmNSJ9.hD9VLlPWxy_Sl-5-wrxMjBQ_NQe7Si6eoXk9D7imMcpOxrueR9axTcWgWgNACjI-FTfnKWmVuXsJiasTxmzP7qvqbm8e9SOF9_K6qcOvCn1kXd9Hq3YijyT4aeYbDMkct2C2CBOGNL6xZ-NANDYSZ8T_GjnZIMBXmx9z-ZGcA6NroZY8ThqjP-AKGLSAHVcyMcsc7CmXd1MWFJHa2WPgIq8vUKFLc-D3vgYA-4ErkUxhDv2wfUoBQGU0FGlysEVHNn7_5vcg3tcYxLd6X3T20nwWg4LZ7R04HGW1zHga-pRwSHOHh3lF4lw8u-qjXEzccdpmCkG-GWutmP4Oc576tg"
             />
-          </div>
+          </div> */}
 
           <div className="my-8">
             <p>Payment Methods Test</p>

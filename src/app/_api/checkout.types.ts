@@ -9,3 +9,27 @@ export type P24PaymentMethod = {
   name: string
   status: boolean
 }
+
+export type RegisterPaymentResponse = {
+  data: {
+    token: string
+  }
+  responseCode: number
+  error?: string
+  code?: number
+}
+
+export type SubmitBlikTransactionRequest = {
+  token: string
+  blikCode: number
+}
+
+export type SubmitBlikTransactionResponse = {
+  data: {
+    orderId: number
+    message: string
+  }
+  responseCode: number
+  error?: string
+  code?: number
+}

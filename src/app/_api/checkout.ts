@@ -1,6 +1,11 @@
 import { type PayloadHandler } from 'payload'
 import crypto from 'crypto'
-import { P24PaymentMethodsResponse } from './checkout.types'
+import {
+  P24PaymentMethodsResponse,
+  RegisterPaymentResponse,
+  SubmitBlikTransactionRequest,
+  SubmitBlikTransactionResponse,
+} from './checkout.types'
 
 // Configuration
 const merchantID = 317031
@@ -25,7 +30,22 @@ const initTransactionHandler: PayloadHandler = async (req): Promise<Response> =>
   const { payload } = req
 
   try {
-    const result = await initTransaction(1, '1234', 'karol.barkowski@gmail.com')
+    const result = await initTransaction(1000, '1234', 'karol.barkowski@gmail.com')
+
+    return Response.json(result)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error'
+    payload.logger.error(message)
+    return Response.json({ error: message }, { status: 500 })
+  }
+}
+
+const submitBlikCodeHandler: PayloadHandler = async (req): Promise<Response> => {
+  const { payload } = req
+  const body = (await req.json()) as unknown as SubmitBlikTransactionRequest
+
+  try {
+    const result = await submitBlikCode(body.token, body.blikCode)
 
     return Response.json(result)
   } catch (error: unknown) {
@@ -63,10 +83,7 @@ async function initTransaction(amount: number, sessionId: string, userEmail: str
     crc: crcKey,
   }
   const crcJsonString = JSON.stringify(crcHashParams)
-  console.log(crcJsonString)
-
   const hash = crypto.createHash('sha384').update(crcJsonString).digest('hex')
-  console.log(hash)
 
   try {
     const response = await fetch('https://sandbox.przelewy24.pl/api/v1/transaction/register', {
@@ -93,9 +110,36 @@ async function initTransaction(amount: number, sessionId: string, userEmail: str
       }),
     })
 
-    console.log(await response.json())
+    return (await response.json()) as unknown as RegisterPaymentResponse
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
 
-    return response.body
+async function submitBlikCode(token: string, blikCode: number) {
+  const base64AuthKey = buildApiKey()
+
+  const bodyJson = JSON.stringify({
+    token,
+    blikCode,
+  })
+  console.log(bodyJson)
+
+  try {
+    const response = await fetch(
+      'https://sandbox.przelewy24.pl/api/v1/paymentMethod/blik/chargeByCode',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${base64AuthKey}`,
+        },
+        body: bodyJson,
+      },
+    )
+
+    return (await response.json()) as unknown as SubmitBlikTransactionResponse
   } catch (error) {
     console.error(error)
     return null
@@ -104,4 +148,4 @@ async function initTransaction(amount: number, sessionId: string, userEmail: str
 
 const buildApiKey = () => btoa(`${merchantID}:${apiKey}`)
 
-export { paymnetMethodsHandler, initTransactionHandler }
+export { paymnetMethodsHandler, initTransactionHandler, submitBlikCodeHandler }

@@ -4,7 +4,7 @@ import { clearUserCart } from './hooks/clearUserCart'
 import { populateOrderedBy } from './hooks/populateOrderedBy'
 import { updateUserPurchases } from './hooks/updateUserPurchases'
 import { CollectionConfig } from 'payload'
-import { initTransactionHandler } from '@/_api/checkout'
+import { initTransactionHandler, submitBlikCodeHandler } from '@/_api/checkout'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -27,6 +27,11 @@ export const Orders: CollectionConfig = {
       path: '/init-payment',
       method: 'post',
       handler: initTransactionHandler,
+    },
+    {
+      path: '/submit-blik',
+      method: 'post',
+      handler: submitBlikCodeHandler,
     },
   ],
   fields: [
